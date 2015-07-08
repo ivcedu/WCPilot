@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Student Writing Form</title>
+        <!-- homer-1.5 Vendor css -->
+        <link rel="stylesheet" href="../homer-1.5/vendor/fontawesome/css/font-awesome.css"/>
+        <link rel="stylesheet" href="../homer-1.5/vendor/metisMenu/dist/metisMenu.css"/>
+        <link rel="stylesheet" href="../homer-1.5/vendor/animate.css/animate.css"/>
+        <link rel="stylesheet" href="../homer-1.5/vendor/summernote/dist/summernote.css"/>
+        <link rel="stylesheet" href="../homer-1.5/vendor/summernote/dist/summernote-bs3.css"/>
+        <link rel="stylesheet" href="../homer-1.5/vendor/bootstrap/dist/css/bootstrap.css"/>
+        <!-- homer-1.5 App css -->
+        <link rel="stylesheet" href="../homer-1.5/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"/>
+        <link rel="stylesheet" href="../homer-1.5/fonts/pe-icon-7-stroke/css/helper.css"/>
+        <link rel="stylesheet" href="../homer-1.5/styles/style.css"/>
+        <!-- include css -->
+        <link rel="stylesheet" href="../include/TimeCircles/css/TimeCircles.css"/>
+        <link rel="stylesheet" href="../include/sweetalert/css/sweetalert.css"/>
+        <!-- application css -->
+        <link rel="stylesheet" href="css/writingform.css"/>
+    </head>
+    <body>
+        <!-- Simple splash screen-->
+        <div class="splash">
+            <div class="color-line"></div>
+            <div class="splash-title">
+                <img src="../homer-1.5/images/loading-bars.svg" width="64" height="64" /> 
+            </div> 
+        </div>
+        
+        <!-- Main Wrapper -->
+        <div id="wrapper">
+            <div class="normalheader transition animated fadeIn">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="hpanel">
+                            <div class="panel-body">
+                                <div class="col-md-6" style="height: 100px;"><h3 class="font-light m-b-xs" id="panel_header"></h3></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="hpanel">
+                            <div class="panel-body">
+                                <div class="col-md-6" id="CountDownTimer" data-timer="3600" style="width: 250px; height: 100px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content animate-panel">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="hpanel">
+                            <div class="panel-body">
+                                <p><button type="button" class="btn btn-info" data-toggle="modal" data-target="#mod_instruction" id="btn_view_instruction">Directions for Writing</button></p>
+                                <div class="unselectable" id="inst_body"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="hpanel">
+                            <div class="panel-body">
+                                <div class="summernote"></div>
+                                <br/>
+                                <button type="button" class="btn btn-lg btn-primary" id="btn_submit"><i class="fa fa-check"></i> Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- modal instruction -->
+            <div class="modal fade" id="mod_instruction" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="color-line"></div>
+                        <div class="modal-header">
+                            <h4 class="modal-title">Writing Sample Instruction</h4>
+                        </div>
+                        <div class="modal-body" id="mod_body_instruction">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        
+        <!-- homer-1.5 Vendor javascript -->
+        <script src="../homer-1.5/vendor/jquery/dist/jquery.min.js"></script>
+        <script src="../homer-1.5/vendor/jquery-ui/jquery-ui.min.js"></script>
+        <script src="../homer-1.5/vendor/slimScroll/jquery.slimscroll.min.js"></script>
+        <script src="../homer-1.5/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="../homer-1.5/vendor/metisMenu/dist/metisMenu.min.js"></script>
+        <script src="../homer-1.5/vendor/iCheck/icheck.min.js"></script>
+        <script src="../homer-1.5/vendor/sparkline/index.js"></script>
+        <script src="../homer-1.5/vendor/summernote/dist/summernote.min.js"></script>
+        <!-- include javascript -->
+        <script src="../include/TimeCircles/js/TimeCircles.js"></script>
+        <script src="../include/sweetalert/js/sweetalert.min.js"></script>
+        <script src="../include/jquery.formatDateTime/js/jquery.formatDateTime.min.js"></script>
+        <!-- application javascript -->
+        <script src="js/writingform.js"></script>
+        <script src="js/session_data.js"></script>
+        <script src="js/db_access.js"></script>
+        <script src="js/sendEmail.js"></script>
+    </body>
+</html>
