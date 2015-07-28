@@ -23,9 +23,6 @@ window.onload = function() {
         }
     }
     else {
-//        var url_str = "https://services.ivc.edu/WCPilot/wsample_view.html" + location.search;
-//        var url_str = "http://ireport.ivc.edu/WCPilot/wsample_view.html" + location.search;
-//        sessionStorage.setItem('ss_wcpilot_url_param', url_str);
         window.open('login.html', '_self');
     }
 };
@@ -341,42 +338,20 @@ function updateScoreValues() {
     }
 }
 
-function setThirdReaderScore() {
-//    if (r1_score > 0 && r2_score > 0) {
-//        var diff = r1_score - r2_score;
-//        if (diff > 2 || diff < -2) {
-//            var result = new Array();
-//            result = db_getReaderByID(r3_id);
-//            var r3_name = result[0]['ReaderName'];
-//            var r3_email = result[0]['ReaderEmail'];
-//
-//            db_updateScoreThirdReader(wsample_id, 1);
-//            sendEmailToThirdReader(r3_name, r3_email);
-//        }
-//        else {
-//            db_updateWSampleStatus(wsample_id, 3);
-//        }
-//    } 
-    
+function setThirdReaderScore() {    
     if ((r1_score > 0 && r1_score < 4) || (r2_score > 0 && r2_score < 4)) {
         if (r1_score !== r2_score && r1_score > 0 && r2_score > 0) {
-//            var result = new Array();
-//            result = db_getReaderByID(r3_id);
-//            var r3_name = result[0]['ReaderName'];
-//            var r3_email = result[0]['ReaderEmail'];
-
             db_updateScoreThirdReader(wsample_id, 1);
-//            sendEmailToThirdReader(r3_name, r3_email);
         }  
         else if (r1_score === r2_score && r1_score > 0 && r2_score > 0) {
             db_updateWSampleStatus(wsample_id, 3);
             StudentESLPlacement();
         } 
     }
-    else {
-        db_updateWSampleStatus(wsample_id, 3);
-        StudentESLPlacement();
-    } 
+//    else {
+//        db_updateWSampleStatus(wsample_id, 3);
+//        StudentESLPlacement();
+//    } 
 }
 
 function StudentESLPlacement() {
