@@ -348,10 +348,9 @@ function setThirdReaderScore() {
             StudentESLPlacement();
         } 
     }
-//    else {
-//        db_updateWSampleStatus(wsample_id, 3);
-//        StudentESLPlacement();
-//    } 
+    else if (r1_score >= 4 && r2_score >= 4) {
+        db_updateWSampleStatus(wsample_id, 3);
+    } 
 }
 
 function StudentESLPlacement() {
