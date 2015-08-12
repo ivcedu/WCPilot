@@ -262,6 +262,19 @@ function db_getInstructionList() {
     return result;
 }
 
+function db_getDashboardList() {
+    var result = new Array();
+    $.ajax({
+        type:"POST",
+        url:"php/db_getDashboardList.php",
+        async: false,  
+        success:function(data) {
+            result = JSON.parse(data);
+        }
+    });
+    return result;
+}
+
 // insert DB ///////////////////////////////////////////////////////////////////
 function db_insertStudentInfo(StuID, StuName, StuEmail) {
     var ResultID = "";
