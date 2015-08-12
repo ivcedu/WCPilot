@@ -237,8 +237,10 @@ function getDashboardList() {
 function setDashboardListHTML(instruction, total_records, instruction_count, avg_duration, avg_score) {    
     var html = "<div class='col-lg-4'><div class='hpanel stats'>";
     html += "<div class='panel-body h-200'>";
-    html += "<div class='stats-title pull-left'><h4>" + instruction + "</h4></div>";
-//    html += "<div class='stats-icon pull-right'><i class='pe-7s-share fa-4x'></i></div>";
+    html += "<div class='row'>";
+    html += "<div class='col-lg-10'><div class='stats-title pull-left'><h4>" + instruction + "</h4></div></div>";
+    html += "<div class='col-lg-2'><div class='stats-icon pull-right'><i class='pe-7s-share fa-4x'></i></div></div>";
+    html += "</div>";
     html += "<div class='m-t-xl'>";
     
     html += "<span class='font-bold no-margins'>Average Duration: " + avg_duration + " min</span>";
