@@ -5,6 +5,7 @@ var login_type = "";
 
 ////////////////////////////////////////////////////////////////////////////////
 window.onload = function() {  
+    $('#logn_error').hide();
     var curBrowser = bowser.name;
     var curVersion = Number(bowser.version);
     
@@ -28,8 +29,6 @@ window.onload = function() {
         default:     
             break;
     }
-    
-    $('#logn_error').hide();
 };
 
 ////////////////////////////////////////////////////////////////////////////////
