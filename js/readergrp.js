@@ -128,6 +128,7 @@ $(document).ready(function() {
     // modal reader group save button click ////////////////////////////////////
     $('#mod_btn_reader_grp_save').click(function() {
         var grp_name = $.trim(textReplaceApostrophe($('#mod_group_mame').val()));
+        var grp_enable = $('#mod_grp_enable').is(':checked');
         var r1_id = $('#mod_body_reader_1').val();
         var r2_id = $('#mod_body_reader_2').val();
         var r3_id = $('#mod_body_reader_3').val();
@@ -141,10 +142,10 @@ $(document).ready(function() {
         }
         
         if (reader_grp_id === "") {
-            addReaderGrpToDB(grp_name, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name);
+            addReaderGrpToDB(grp_name, grp_enable, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name);
         }
         else {
-            updateReaderGrpToDB(grp_name, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name);
+            updateReaderGrpToDB(grp_name, grp_enable, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name);
         }
         
         swal({title: "Saved!", text: "Reader group has been saved", type: "success"});
@@ -237,12 +238,18 @@ function getLoginInfo() {
 
 function resetModReaderGrpInfo() {
     $('#mod_group_mame').val("");
+    $('#mod_grp_enable').prop('checked', false);
     $('#mod_body_reader_1').val('0');
     $('#mod_body_reader_1').selectpicker('refresh');
     $('#mod_body_reader_2').val('0');
     $('#mod_body_reader_2').selectpicker('refresh');
     $('#mod_body_reader_3').val('0');
     $('#mod_body_reader_3').selectpicker('refresh');
+    
+    $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green'
+    });
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -252,6 +259,9 @@ function getSelectedReaderGrpInfo() {
     
     if (result.length === 1) {
         $('#mod_group_mame').val(result[0]['GrpName']);
+        if (result[0]['GrpEnable'] === "1") {
+            $('#mod_grp_enable').prop('checked', true);
+        }
         $('#mod_body_reader_1').val(result[0]['R1ID']);
         $('#mod_body_reader_1').selectpicker('refresh');
         $('#mod_body_reader_2').val(result[0]['R2ID']);
@@ -259,6 +269,11 @@ function getSelectedReaderGrpInfo() {
         $('#mod_body_reader_3').val(result[0]['R3ID']);
         $('#mod_body_reader_3').selectpicker('refresh');
     }
+    
+    $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green'
+    });
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -271,6 +286,12 @@ function setReaderGrpHTML(id) {
     html += "<div class='row'>";
     html += "<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>Group Name:</div>";
     html += "<div class='col-xs-6 col-sm-8 col-md-9 col-lg-10' id='grp_name_" + id + "'></div>";
+    html += "</div>";
+    html += "<br/>";
+    html += "<div class='row'>";
+    html += "<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>";
+    html += "<label><input type='checkbox' class='i-checks' disabled id='grp_enable_" + id + "'> Active Group</label>";
+    html += "</div>";
     html += "</div>";
     html += "<br/>";
     html += "<div class='row'>";
@@ -303,14 +324,25 @@ function setReaderGrpHTML(id) {
     $('#reader_grp_list').append(html);
 }
 
-function setReaderGrpValues(id, grp_name, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name) {
+function setReaderGrpValues(id, grp_name, grp_enable, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name) {
     $('#grp_name_' + id).html(grp_name);
+    if (grp_enable === "1" || grp_enable === true) {
+        $('#grp_enable_' + id).prop('checked', true);
+    }
+    else {
+        $('#grp_enable_' + id).prop('checked', false);
+    }
     $('#r1_name_' + id).html(r1_name);
     $('#r1_id_' + id).html(r1_id);
     $('#r2_name_' + id).html(r2_name);
     $('#r2_id_' + id).html(r2_id);
     $('#r3_name_' + id).html(r3_name);
     $('#r3_id_' + id).html(r3_id);
+    
+    $('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green'
+    });
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -338,21 +370,21 @@ function getReaderGrpList() {
     $('#reader_grp_list').empty();
     for (var i = 0; i < result.length; i++) {
         setReaderGrpHTML(result[i]['ReaderGrpID']);
-        setReaderGrpValues(result[i]['ReaderGrpID'], result[i]['GrpName'], result[i]['R1ID'], result[i]['R2ID'], result[i]['R3ID'], result[i]['R1Name'], result[i]['R2Name'], result[i]['R3Name']);
+        setReaderGrpValues(result[i]['ReaderGrpID'], result[i]['GrpName'], result[i]['GrpEnable'], result[i]['R1ID'], result[i]['R2ID'], result[i]['R3ID'], result[i]['R1Name'], result[i]['R2Name'], result[i]['R3Name']);
     }
     
     $('.animate-panel').animatePanel();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function addReaderGrpToDB(grp_name, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name) {
-    reader_grp_id = db_insertReaderGrp(grp_name, r1_id, r2_id, r3_id);
+function addReaderGrpToDB(grp_name, grp_enable, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name) {
+    reader_grp_id = db_insertReaderGrp(grp_enable, grp_name, r1_id, r2_id, r3_id);
     setReaderGrpHTML(reader_grp_id);
-    setReaderGrpValues(reader_grp_id, grp_name, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name);
+    setReaderGrpValues(reader_grp_id, grp_name, grp_enable, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name);
 }
 
-function updateReaderGrpToDB(grp_name, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name) {
-    if (db_updateReaderGrp(reader_grp_id, grp_name, r1_id, r2_id, r3_id)) {
-        setReaderGrpValues(reader_grp_id, grp_name, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name);
+function updateReaderGrpToDB(grp_name, grp_enable, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name) {
+    if (db_updateReaderGrp(reader_grp_id, grp_enable, grp_name, r1_id, r2_id, r3_id)) {
+        setReaderGrpValues(reader_grp_id, grp_name, grp_enable, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name);
     }
 }

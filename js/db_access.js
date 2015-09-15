@@ -69,6 +69,19 @@ function db_getReaderGrpList() {
     return result;
 }
 
+function db_getReaderGrpListEnable() {
+    var result = new Array();
+    $.ajax({
+        type:"POST",
+        url:"php/db_getReaderGrpListEnable.php",
+        async: false,  
+        success:function(data) {
+            result = JSON.parse(data);
+        }
+    });
+    return result;
+}
+
 function db_getReaderByID(ReaderID) {
     var result = new Array();
     $.ajax({
@@ -304,12 +317,12 @@ function db_insertReader(Active, ReaderName, ReaderEmail) {
     return ResultID;
 }
 
-function db_insertReaderGrp(GrpName, R1ID, R2ID, R3ID) {
+function db_insertReaderGrp(GrpEnable, GrpName, R1ID, R2ID, R3ID) {
     var ResultID = "";
     $.ajax({
         type:"POST",
         url:"php/db_insertReaderGrp.php",
-        data:{GrpName:GrpName, R1ID:R1ID, R2ID:R2ID, R3ID:R3ID},
+        data:{GrpEnable:GrpEnable, GrpName:GrpName, R1ID:R1ID, R2ID:R2ID, R3ID:R3ID},
         async: false,  
         success:function(data) {
             ResultID = JSON.parse(data);
@@ -389,12 +402,12 @@ function db_updateReader(ReaderID, Active, ReaderName, ReaderEmail) {
     return Result;
 }
 
-function db_updateReaderGrp(ReaderGrpID, GrpName, R1ID, R2ID, R3ID) {
+function db_updateReaderGrp(ReaderGrpID, GrpEnable, GrpName, R1ID, R2ID, R3ID) {
     var Result = false;
     $.ajax({
         type:"POST",
         url:"php/db_updateReaderGrp.php",
-        data:{ReaderGrpID:ReaderGrpID, GrpName:GrpName, R1ID:R1ID, R2ID:R2ID, R3ID:R3ID},
+        data:{ReaderGrpID:ReaderGrpID, GrpEnable:GrpEnable, GrpName:GrpName, R1ID:R1ID, R2ID:R2ID, R3ID:R3ID},
         async: false,  
         success:function(data) {
             Result = JSON.parse(data);

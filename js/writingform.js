@@ -34,6 +34,25 @@ $(document).ready(function() {
     
     // Initialize animate panel function
     $('.animate-panel').animatePanel();
+    
+    // Function for collapse hpanel
+    $('.showhide').click(function (event) {
+        event.preventDefault();
+        var hpanel = $(this).closest('div.hpanel');
+        var icon = $(this).find('i:first');
+        var body = hpanel.find('div.panel-body');
+        var footer = hpanel.find('div.panel-footer');
+        body.slideToggle(300);
+        footer.slideToggle(200);
+
+        // Toggle icon from up to down
+        icon.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+        hpanel.toggleClass('').toggleClass('panel-collapse');
+        setTimeout(function () {
+            hpanel.resize();
+            hpanel.find('[id^=map-]').resize();
+        }, 50);
+    });
         
     // Set minimal height of #wrapper to fit the window
     fixWrapperHeight();
@@ -182,9 +201,6 @@ function addWSample() {
     var wsample_id = db_insertWSample(student_id, db_start, db_end, duration, inst_id, title, sHTML);
     db_insertScore(wsample_id, r1_id, 1, r2_id, 1, r3_id);
     setNextActiveReaderGrp();
-    
-//    sendEmailToReader(r1_name, r1_email);
-//    sendEmailToReader(r2_name, r2_email);
 }
 
 function getActiveReaderGrp() {
@@ -202,11 +218,13 @@ function getActiveReaderGrp() {
 
 function setNextActiveReaderGrp() {
     var result = new Array();
-    result = db_getReaderGrpList();
+    result = db_getReaderGrpListEnable();
     
     var index = 0;
+    var search_active = false;
     for (var i = 0; i < result.length; i++) {
         if (result[i]['Active'] === "1") {
+            search_active = true;
             db_updateActiveReaderGrp(result[i]['ReaderGrpID'], 0);
             index = i + 1;
             if (index >= result.length) {
@@ -216,32 +234,28 @@ function setNextActiveReaderGrp() {
         }
     }
     
-    var next_grp_id = result[index]['ReaderGrpID'];
+    var next_grp_id = "";
+    if (search_active) {
+        next_grp_id = result[index]['ReaderGrpID'];
+    }
+    else {
+        next_grp_id = result[0]['ReaderGrpID'];
+    }
     db_updateActiveReaderGrp(next_grp_id, 1);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function sendEmailToReader(reader_name, reader_email) {
-//    var url_param = "?print_request_id=" + print_request_id;
-    var name = reader_name;
-    var email = reader_email;
-    // testing
-    email = "stafftest@ivc.edu";
-    
-    var subject = "Writing Assessment";
-    var message = "Dear " + name + ", <br><br>";
-    message += "You have essays to read. Please remember that you must submit your scores for these essays within the four-day time limit so that Dan and Brenda ";
-    message += "have time to check for third reads to meet the 5-day limit.<br/><br/>";
-    message += "Thank you.";
-
-    //message += "<a href='http://ireport.ivc.edu/DCenter/printRequest.html" + url_param + "'>" + $('#request_title').val() + "</a><br><br>";
-//    message += "<a href='https://services.ivc.edu/DCenter/printRequest.html" + url_param + "'>" + $('#request_title').val() + "</a><br><br>";
-    
-//    message += "Should you have any questions or comments, please contact the IVC Duplicating Center.<br/><br/>"; 
-//    message += "Thank you.<br>";
-//    message += "IVC Duplicating Center<br>";
-//    message += "ivcduplicating@ivc.edu<br>";
-//    message += "phone: 949.451.5297";
-    
-    proc_sendEmail(email, name, subject, message);
-}
+//function sendEmailToReader(reader_name, reader_email) {
+//    var name = reader_name;
+//    var email = reader_email;
+//    // testing
+//    email = "stafftest@ivc.edu";
+//    
+//    var subject = "Writing Assessment";
+//    var message = "Dear " + name + ", <br><br>";
+//    message += "You have essays to read. Please remember that you must submit your scores for these essays within the four-day time limit so that Dan and Brenda ";
+//    message += "have time to check for third reads to meet the 5-day limit.<br/><br/>";
+//    message += "Thank you.";
+//    
+//    proc_sendEmail(email, name, subject, message);
+//}
