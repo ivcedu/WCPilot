@@ -348,7 +348,7 @@ function setReaderGrpValues(id, grp_name, grp_enable, r1_id, r2_id, r3_id, r1_na
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function getReaderList() {
     var result = new Array();
-    result = db_getReaderList();
+    result = db_getReaderListActive();
     
     var opt_html = "<option value ='0' selected>Select</option>";
     for (var i = 0; i < result.length; i++) {

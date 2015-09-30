@@ -56,6 +56,19 @@ function db_getReaderList() {
     return result;
 }
 
+function db_getReaderListActive() {
+    var result = new Array();
+    $.ajax({
+        type:"POST",
+        url:"php/db_getReaderListActive.php",
+        async: false,  
+        success:function(data) {
+            result = JSON.parse(data);
+        }
+    });
+    return result;
+}
+
 function db_getReaderGrpList() {
     var result = new Array();
     $.ajax({

@@ -141,7 +141,12 @@ $(document).ready(function() {
             updateReaderToDB(active, reader_name, reader_email);
         }
         
-        swal({title: "Saved!", text: "Reader has been saved", type: "success"});
+        var note = "Reader has been saved";
+        if (!active) {
+            note += "\nPlease update Reader Group setting";
+        }
+        
+        swal({title: "Saved!", text: note, type: "success"});
     });
     
     // rating user list edit button click //////////////////////////////////////
