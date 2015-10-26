@@ -275,6 +275,20 @@ function db_getInstructionByID(InstructionID) {
     return result;
 }
 
+function db_getInstructionByTitle(Title) {
+    var result = "";
+    $.ajax({
+        type:"POST",
+        url:"php/db_getInstructionByTitle.php",
+        data:{Title:Title},
+        async: false,  
+        success:function(data) {
+            result = JSON.parse(data);
+        }
+    });
+    return result;
+}
+
 function db_getInstructionList() {
     var result = new Array();
     $.ajax({

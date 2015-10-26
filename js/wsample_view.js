@@ -164,7 +164,21 @@ $(document).ready(function() {
         window.open('login.html', '_self');
         return false;
     });
+    
+    // scoring guide button click //////////////////////////////////////////////
+    $('#btn_score_guide').click(function() {
+        window.open('doc/IVC_Writing_Sample_Scoring_Guide.pdf', '_blank');
+        return false;
+    });
+    
+    // instruction title click /////////////////////////////////////////////////
+    $('#instruction').click(function() {
+        var inst_detail = db_getInstructionByTitle($('#title').html());
+        $('#mod_instruction_title').html($('#title').html());
+        $('#mod_instruction_detail').html(inst_detail);
+    });
 
+    // submit button click /////////////////////////////////////////////////////
     $('#btn_submit').click(function() {
         var score = $('#score_list').val();
         if (score === "0") {
@@ -380,28 +394,6 @@ function emailToStudentESL() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function sendEmailToThirdReader(reader_name, reader_email) {
-//    var url_param = "?print_request_id=" + print_request_id;
-    var name = reader_name;
-    var email = reader_email;
-    
-    var subject = "Writing Assessment";
-    var message = "You have essays to read. Please remember that you must submit your scores for these essays within the four-day time limit so that Dan and Brenda ";
-    message += "have time to check for third reads to meet the 5-day limit.<br/><br/>";
-    message += "Thank you.";
-
-    //message += "<a href='http://ireport.ivc.edu/DCenter/printRequest.html" + url_param + "'>" + $('#request_title').val() + "</a><br><br>";
-//    message += "<a href='https://services.ivc.edu/DCenter/printRequest.html" + url_param + "'>" + $('#request_title').val() + "</a><br><br>";
-    
-//    message += "Should you have any questions or comments, please contact the IVC Duplicating Center.<br/><br/>"; 
-//    message += "Thank you.<br>";
-//    message += "IVC Duplicating Center<br>";
-//    message += "ivcduplicating@ivc.edu<br>";
-//    message += "phone: 949.451.5297";
-    
-    proc_sendEmail(email, name, subject, message);
-}
-
 function sendEmailToStudentESLPlacement(stu_name, stu_email) {
     var name = stu_name;
     var email = stu_email;

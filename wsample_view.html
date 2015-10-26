@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="../homer-1.5/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"/>
         <link rel="stylesheet" href="../homer-1.5/fonts/pe-icon-7-stroke/css/helper.css"/>
         <link rel="stylesheet" href="../homer-1.5/styles/style.css"/>
+        <link rel="stylesheet" href="../homer-1.5/styles/static_custom.css">
         <!-- include css -->
         <link rel="stylesheet" href="../include/bootstrap-select/css/bootstrap-select.1.5.4.min.css"/>
         <link rel="stylesheet" href="../include/jquery-ui-themes-1.11.4/themes/flick/jquery-ui.min.css"/>
@@ -82,6 +83,9 @@
                             <div class="col-sx-4 col-sm-3 col-md-2 col-lg-1">
                                 <button type="button" class="btn btn-primary" id="btn_submit"><i class="fa fa-check"></i> Submit</button>
                             </div>
+                            <div class="col-sx-4 col-sm-3 col-md-2 col-lg-1">
+                                <button type="button" class="btn btn-outline btn-info" id="btn_score_guide"><i class="fa fa-file-pdf-o"></i> Scoring Guide</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -92,7 +96,7 @@
                     <div class="col-sx-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="hpanel blog-article-box">
                             <div class="panel-heading">
-                                <h4 id="title"></h4>
+                                <a href=# data-toggle="modal" data-target="#mod_instruction" id="instruction"><h4 id="title"></h4></a>
                                 <div class="text-muted">
                                     <span style="font-size: 18px;" id="created"></span>
                                 </div>
@@ -102,6 +106,28 @@
                             <div class="panel-footer">
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- instruction modal -->
+        <div class="modal fade" id="mod_instruction" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="color-line"></div>
+                    <div class="modal-header text-center">
+                        <h3 id="mod_instruction_title"></h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12" id="mod_instruction_detail"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
