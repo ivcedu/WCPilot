@@ -47,8 +47,6 @@ $(document).ready(function() {
                 else {
                     if (login_type === "Student") {
                         sessionData_login(id, name, email, login_type);
-//                        var instruction = getRandomInstruction();
-//                        window.open(instruction, '_self'); 
                         window.open('instruction.html', '_self'); 
                         return false;
                     }

@@ -4,7 +4,7 @@ var wsample_id = "";
 var scoring = false;
 ////////////////////////////////////////////////////////////////////////////////
 window.onload = function() {
-    if (sessionStorage.key(0) !== null) {   
+    if (sessionStorage.key(0) !== null) {        
         $('.splash').css('display', 'none');
         if (!getAdminByEmail()) {
             hideSideMenu();

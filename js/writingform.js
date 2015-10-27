@@ -218,30 +218,23 @@ function getActiveReaderGrp() {
 
 function setNextActiveReaderGrp() {
     var result = new Array();
-    result = db_getReaderGrpListEnable();
-    
-    var index = 0;
-    var search_active = false;
-    for (var i = 0; i < result.length; i++) {
-        if (result[i]['Active'] === "1") {
-            search_active = true;
-            db_updateActiveReaderGrp(result[i]['ReaderGrpID'], 0);
-            index = i + 1;
-            if (index >= result.length) {
-                index = 0;
+        result = db_getReaderGrpListEnable();
+
+        var next_grp_id = "";
+        for (var i = 0; i < result.length; i++) {
+            if (result[i]['Active'] === "1") {
+                db_updateActiveReaderGrp(result[i]['ReaderGrpID'], 0);
+                if (i+1 === result.length) {
+                    next_grp_id = result[0]['ReaderGrpID'];
+                }
+                else {
+                    next_grp_id = result[i+1]['ReaderGrpID'];
+                }
+                break;
             }
-            break;
         }
-    }
-    
-    var next_grp_id = "";
-    if (search_active) {
-        next_grp_id = result[index]['ReaderGrpID'];
-    }
-    else {
-        next_grp_id = result[0]['ReaderGrpID'];
-    }
-    db_updateActiveReaderGrp(next_grp_id, 1);
+
+        db_updateActiveReaderGrp(next_grp_id, 1);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
