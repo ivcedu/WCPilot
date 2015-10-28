@@ -171,6 +171,12 @@ $(document).ready(function() {
         return false;
     });
     
+    // generic prompt button click /////////////////////////////////////////////
+    $('#btn_generic_prompt').click(function() {
+        window.open('doc/Generic_Prompt.pdf', '_blank');
+        return false;
+    });
+    
     // instruction title click /////////////////////////////////////////////////
     $('#instruction').click(function() {
         var inst_detail = db_getInstructionByTitle($('#title').html());
