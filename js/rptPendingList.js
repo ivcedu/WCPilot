@@ -9,7 +9,6 @@ window.onload = function() {
         }  
         getLoginInfo();
         getWSampleList();
-        $('#tbl_pending_list').dataTable({ paging: false, searching: false, bInfo: false });
     }
     else {
         window.open('login.html', '_self');
@@ -126,6 +125,11 @@ $(document).ready(function() {
         wsample_id = $(this).attr('id').replace("wsample_id_", "");
         window.open('wsample_print.html?wsample_id=' + wsample_id, '_blank');
         return false;
+    });
+    
+    // table header click event ////////////////////////////////////////////////
+    $('#tbl_pending_list thead').on('click', 'th', function () {
+        $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
     });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,5 +279,7 @@ function getWSampleList() {
     }
     $('#tbl_body').append(html);
     
+    $('#tbl_pending_list').dataTable({ paging: false, searching: false, bInfo: false, scrollX: true,
+                                        "initComplete": function(settings, json) { $('.dataTables_scrollBody thead tr').css({visibility:'collapse'}); } });
     $('.animate-panel').animatePanel();
 }

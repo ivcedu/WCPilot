@@ -10,9 +10,8 @@ window.onload = function() {
             hideSideMenu();
         }
         getLoginInfo();
-        getReaderByEmail();    
+        getReaderByEmail();  
         getWSampleList();
-        $('#tbl_wsample_list').dataTable({ paging: false, searching: false, bInfo: false });
     }
     else {
         window.open('Login.html', '_self');
@@ -137,6 +136,11 @@ $(document).ready(function() {
             window.open('wsample_print.html?wsample_id=' + wsample_id, '_blank');
             return false;
         }
+    });
+    
+    // table header click event ////////////////////////////////////////////////
+    $('#tbl_wsample_list thead').on('click', 'th', function () {
+        $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
     });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -268,7 +272,9 @@ function getWSampleList() {
         html += setWSampleListHTML(result[i]['WSampleID'], result[i]['StudentID'], result[i]['StudentName'], result[i]['Duration'], result[i]['SubmissionDate']);
     }
     $('#tbl_body').append(html);
-    
+
+    $('#tbl_wsample_list').dataTable({ paging: false, searching: false, bInfo: false, scrollX: true,
+                                        "initComplete": function(settings, json) { $('.dataTables_scrollBody thead tr').css({visibility:'collapse'}); } });
     $('.animate-panel').animatePanel();
 }
 

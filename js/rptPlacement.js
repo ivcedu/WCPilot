@@ -9,7 +9,6 @@ window.onload = function() {
         }  
         getLoginInfo();
         getPlacementList();
-        $('#tbl_placement_list').dataTable({ paging: false, searching: false, bInfo: false });
     }
     else {
         window.open('login.html', '_self');
@@ -119,6 +118,11 @@ $(document).ready(function() {
         sessionStorage.clear();
         window.open('login.html', '_self');
         return false;
+    });
+    
+    // table header click event ////////////////////////////////////////////////
+    $('#tbl_placement_list thead').on('click', 'th', function () {
+        $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
     });
 
 //    $('#btn_export_excel').click(function() {
@@ -256,5 +260,7 @@ function getPlacementList() {
     }
     $('#tbl_body').append(html);
     
+    $('#tbl_placement_list').dataTable({ paging: false, searching: false, bInfo: false, scrollX: true,
+                                        "initComplete": function(settings, json) { $('.dataTables_scrollBody thead tr').css({visibility:'collapse'}); } });
     $('.animate-panel').animatePanel();
 }

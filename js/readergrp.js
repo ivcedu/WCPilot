@@ -125,6 +125,11 @@ $(document).ready(function() {
         $('#mod_reader_grp_header').html("New Reader Group Setting");
     });
     
+    // edit select group button click //////////////////////////////////////////
+    $('#btn_edit_select_grp').click(function() {
+        getReaderGrpListAll();
+    });
+    
     // modal reader group save button click ////////////////////////////////////
     $('#mod_btn_reader_grp_save').click(function() {
         var grp_name = $.trim(textReplaceApostrophe($('#mod_group_mame').val()));
@@ -149,6 +154,14 @@ $(document).ready(function() {
         }
         
         swal({title: "Saved!", text: "Reader group has been saved", type: "success"});
+    });
+    
+    // modal select group save button click ////////////////////////////////////
+    $('#mod_btn_select_grp_save').click(function() {
+        var reader_grp_id = $('#mod_body_select_grp').val();
+        db_updateReaderGrpCurrentActive(reader_grp_id);
+        
+        swal({title: "Saved!", text: "Assigned new active reader group has been saved", type: "success"});
     });
     
     // reader group list edit button click /////////////////////////////////////
@@ -234,6 +247,10 @@ $.fn['animatePanel'] = function() {
 function getLoginInfo() {
     var login_name = sessionStorage.getItem('ss_wcpilot_loginName');
     $('#login_user').html(login_name);
+    
+    if (login_name !== "Rich Kim" && login_name !== "Bruce Hagan") {
+        $('#btn_edit_select_grp').hide();
+    }
 }
 
 function resetModReaderGrpInfo() {
@@ -374,6 +391,26 @@ function getReaderGrpList() {
     }
     
     $('.animate-panel').animatePanel();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function getReaderGrpListAll() {
+    var result = new Array();
+    result = db_getReaderGrpListAll();
+    
+    $('#mod_body_select_grp').empty();
+    var opt_html = "";
+    var cur_selected = "";
+    for (var i = 0; i < result.length; i++) {
+        opt_html += "<option value ='" + result[i]['ReaderGrpID'] + "'>" + result[i]['GrpName'] + "</option>";
+        if (result[i]['Active'] === "1") {
+            cur_selected = result[i]['ReaderGrpID']
+        }
+    }
+    
+    $('#mod_body_select_grp').append(opt_html);
+    $('#mod_body_select_grp').val(cur_selected);
+    $('#mod_body_select_grp').selectpicker('refresh');
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

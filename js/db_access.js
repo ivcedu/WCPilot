@@ -82,6 +82,19 @@ function db_getReaderGrpList() {
     return result;
 }
 
+function db_getReaderGrpListAll() {
+    var result = new Array();
+    $.ajax({
+        type:"POST",
+        url:"php/db_getReaderGrpListAll.php",
+        async: false,  
+        success:function(data) {
+            result = JSON.parse(data);
+        }
+    });
+    return result;
+}
+
 function db_getReaderGrpListEnable() {
     var result = new Array();
     $.ajax({
@@ -421,6 +434,20 @@ function db_updateReader(ReaderID, Active, ReaderName, ReaderEmail) {
         type:"POST",
         url:"php/db_updateReader.php",
         data:{ReaderID:ReaderID, Active:Active, ReaderName:ReaderName, ReaderEmail:ReaderEmail},
+        async: false,  
+        success:function(data) {
+            Result = JSON.parse(data);
+        }
+    });
+    return Result;
+}
+
+function db_updateReaderGrpCurrentActive(ReaderGrpID) {
+    var Result = false;
+    $.ajax({
+        type:"POST",
+        url:"php/db_updateReaderGrpCurrentActive.php",
+        data:{ReaderGrpID:ReaderGrpID},
         async: false,  
         success:function(data) {
             Result = JSON.parse(data);
