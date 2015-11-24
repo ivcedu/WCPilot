@@ -23,6 +23,9 @@ $(window).bind("resize click", function () {
     setTimeout(function () {
         fixWrapperHeight();
     }, 300);
+    
+    $('#tbl_pending_list').dataTable().draw(false);
+    $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
 });
 
 ////////////////////////////////////////////////////////////////////////////////
