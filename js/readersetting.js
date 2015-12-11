@@ -147,6 +147,7 @@ $(document).ready(function() {
         }
         
         swal({title: "Saved!", text: note, type: "success"});
+        return false;
     });
     
     // rating user list edit button click //////////////////////////////////////

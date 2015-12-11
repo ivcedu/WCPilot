@@ -150,6 +150,7 @@ $(document).ready(function() {
         }
         
         swal({title: "Saved!", text: "Instruction has been saved", type: "success"});
+        return false;
     });
     
     // instruction list edit button click //////////////////////////////////////

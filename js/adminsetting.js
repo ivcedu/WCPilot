@@ -136,6 +136,7 @@ $(document).ready(function() {
         }
         
         swal({title: "Saved!", text: "Admin has been saved", type: "success"});
+        return false;
     });
     
     // rating user list edit button click //////////////////////////////////////

@@ -154,6 +154,7 @@ $(document).ready(function() {
         }
         
         swal({title: "Saved!", text: "Reader group has been saved", type: "success"});
+        return false;
     });
     
     // modal select group save button click ////////////////////////////////////
@@ -162,6 +163,7 @@ $(document).ready(function() {
         db_updateReaderGrpCurrentActive(reader_grp_id);
         
         swal({title: "Saved!", text: "Assigned new active reader group has been saved", type: "success"});
+        return false;
     });
     
     // reader group list edit button click /////////////////////////////////////
@@ -404,7 +406,7 @@ function getReaderGrpListAll() {
     for (var i = 0; i < result.length; i++) {
         opt_html += "<option value ='" + result[i]['ReaderGrpID'] + "'>" + result[i]['GrpName'] + "</option>";
         if (result[i]['Active'] === "1") {
-            cur_selected = result[i]['ReaderGrpID']
+            cur_selected = result[i]['ReaderGrpID'];
         }
     }
     
