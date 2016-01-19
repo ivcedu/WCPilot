@@ -1,4 +1,5 @@
 var wsample_id = "";
+var m_table;
 
 ////////////////////////////////////////////////////////////////////////////////
 window.onload = function() {
@@ -122,6 +123,11 @@ $(document).ready(function() {
         window.open('login.html', '_self');
         return false;
     });
+
+    // table header click event ////////////////////////////////////////////////
+    $('#tbl_wsample_list thead').on('click', 'th', function () {
+        $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
+    });
     
     // table wsample title click event /////////////////////////////////////////
     $('table').on('click', 'a[id^="wsample_id_"]', function() {
@@ -130,10 +136,8 @@ $(document).ready(function() {
         return false;
     });
     
-    // table header click event ////////////////////////////////////////////////
-    $('#tbl_wsample_list thead').on('click', 'th', function () {
-        $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
-    });
+    // jquery datatables initialize ////////////////////////////////////////////
+    m_table = $('#tbl_wsample_list').DataTable({ paging: false, bInfo: false, scrollX: true });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 });
@@ -229,52 +233,13 @@ function getAdminByEmail() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function setWSampleListHTML(wsample_id, student_id, student_name, duration, submission_date,
-                            r1_name, r1_score, r1_esl, r1_date_score,
-                            r2_name, r2_score, r2_esl, r2_date_score,
-                            r3_name, r3_score, r3_esl, r3_date_score) { 
-                                
-    var html = "<tr>";
-    html += "<td>" + wsample_id + "</td>";
-    html += "<td>" + student_id + "</td>";
-    html += "<td>" + student_name + "</td>";
-    html += "<td><a href=# id='wsample_id_" + wsample_id + "'><i class='fa fa-file'></i></a></td>";
-    html += "<td>" + duration + "</td>";
-    html += "<td>" + convertDBDateTimeToString(submission_date) + "</td>";
-    html += "<td>" + r1_name + "</td>";
-    html += "<td>" + (r1_score === null ? "" : r1_score) + "</td>";
-    html += "<td>" + ((r1_esl === null || r1_esl === "0") ? "" : "Yes") + "</td>";
-    html += "<td>" + (r1_date_score === null ? "" : convertDBDateTimeToString(r1_date_score)) + "</td>";
-    html += "<td>" + r2_name + "</td>";
-    html += "<td>" + (r2_score === null ? "" : r2_score) + "</td>";
-    html += "<td>" + ((r2_esl === null || r2_esl === "0") ? "" : "Yes") + "</td>";
-    html += "<td>" + (r2_date_score === null ? "" : convertDBDateTimeToString(r2_date_score)) + "</td>";
-    html += "<td>" + (r3_name === null  ? "" : r3_name) + "</td>";
-    html += "<td>" + (r3_score === null  ? "" : r3_score) + "</td>";
-    html += "<td>" + ((r3_esl === null || r3_esl === "0") ? "" : "Yes") + "</td>";
-    html += "<td>" + (r3_date_score === null  ? "" : convertDBDateTimeToString(r3_date_score)) + "</td>";
-    html += "</tr>";
-    
-    return html;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function getWSampleList() {
     var result = new Array();
     result = db_getWSampleList(3);
     
-    $('#tbl_body').empty();
-    var html = "";
-    for (var i = 0; i < result.length; i++) {
-        html += setWSampleListHTML(result[i]['WSampleID'], result[i]['StudentID'], result[i]['StudentName'],
-                                    result[i]['Duration'], result[i]['SubmissionDate'],
-                                    result[i]['R1Name'], result[i]['R1Score'], result[i]['R1ESL'], result[i]['R1DateScore'],
-                                    result[i]['R2Name'], result[i]['R2Score'], result[i]['R2ESL'], result[i]['R2DateScore'],
-                                    result[i]['R3Name'], result[i]['R3Score'], result[i]['R3ESL'], result[i]['R3DateScore']);
-    }
-    $('#tbl_body').append(html);
+    m_table.clear();
+    m_table.rows.add(result).draw();
+    $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
     
-    $('#tbl_wsample_list').dataTable({ paging: false, searching: false, bInfo: false, scrollX: true,
-                                        "initComplete": function(settings, json) { $('.dataTables_scrollBody thead tr').css({visibility:'collapse'}); } });
     $('.animate-panel').animatePanel();
 }

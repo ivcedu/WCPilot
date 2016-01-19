@@ -2,6 +2,7 @@ var reader_id = "";
 var wsample_id = "";
 
 var scoring = false;
+var m_table;
 ////////////////////////////////////////////////////////////////////////////////
 window.onload = function() {
     if (sessionStorage.key(0) !== null) {        
@@ -123,6 +124,11 @@ $(document).ready(function() {
         return false;
     });
     
+    // table header click event ////////////////////////////////////////////////
+    $('#tbl_wsample_list thead').on('click', 'th', function () {
+        $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
+    });
+    
     // table wsample title click event /////////////////////////////////////////
     $('table').on('click', 'a[id^="wsample_id_"]', function() {
         wsample_id = $(this).attr('id').replace("wsample_id_", "");
@@ -138,10 +144,8 @@ $(document).ready(function() {
         }
     });
     
-    // table header click event ////////////////////////////////////////////////
-    $('#tbl_wsample_list thead').on('click', 'th', function () {
-        $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
-    });
+    // jquery datatables initialize ////////////////////////////////////////////
+    m_table = $('#tbl_wsample_list').DataTable({ paging: false, bInfo: false, searching: false, scrollX: true });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 });
@@ -247,34 +251,14 @@ function getReaderByEmail() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function setWSampleListHTML(wsample_id, student_id, student_name, duration, submission_date) { 
-                                
-    var html = "<tr>";
-    html += "<td>" + wsample_id + "</td>";
-    html += "<td>" + student_id + "</td>";
-    html += "<td>" + student_name + "</td>";
-    html += "<td><a href=# id='wsample_id_" + wsample_id + "'><i class='fa fa-file'></i></a></td>";
-    html += "<td>" + duration + "</td>";
-    html += "<td>" + convertDBDateTimeToString(submission_date) + "</td>";
-    html += "</tr>";
-    
-    return html;
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function getWSampleList() {
     var result = new Array();
     result = db_getWSWaitingListByLoginID(reader_id);
     
-    $('#tbl_body').empty();
-    var html = "";
-    for (var i = 0; i < result.length; i++) {
-        html += setWSampleListHTML(result[i]['WSampleID'], result[i]['StudentID'], result[i]['StudentName'], result[i]['Duration'], result[i]['SubmissionDate']);
-    }
-    $('#tbl_body').append(html);
-
-    $('#tbl_wsample_list').dataTable({ paging: false, searching: false, bInfo: false, scrollX: true,
-                                        "initComplete": function(settings, json) { $('.dataTables_scrollBody thead tr').css({visibility:'collapse'}); } });
+    m_table.clear();
+    m_table.rows.add(result).draw();
+    $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
+    
     $('.animate-panel').animatePanel();
 }
 

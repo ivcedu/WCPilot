@@ -328,6 +328,32 @@ function db_getDashboardList() {
     return result;
 }
 
+function db_getDiscrepanciesList() {
+    var result = new Array();
+    $.ajax({
+        type:"POST",
+        url:"php/db_getDiscrepanciesList.php",
+        async: false,  
+        success:function(data) {
+            result = JSON.parse(data);
+        }
+    });
+    return result;
+}
+
+function db_getPendingList() {
+    var result = new Array();
+    $.ajax({
+        type:"POST",
+        url:"php/db_getPendingList.php",
+        async: false,  
+        success:function(data) {
+            result = JSON.parse(data);
+        }
+    });
+    return result;
+}
+
 // insert DB ///////////////////////////////////////////////////////////////////
 function db_insertStudentInfo(StuID, StuName, StuEmail) {
     var ResultID = "";
