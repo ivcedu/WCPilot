@@ -164,6 +164,7 @@ $(document).ready(function() {
         db_updateReaderGrpCurrentActive(reader_grp_id);
         
         swal({title: "Saved!", text: "Assigned new active reader group has been saved", type: "success"});
+        $('#mod_select_grp').modal('hide');
         return false;
     });
     
