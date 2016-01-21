@@ -154,6 +154,7 @@ $(document).ready(function() {
         }
         
         swal({title: "Saved!", text: "Reader group has been saved", type: "success"});
+        $('#mod_select_grp').modal('hide');
         return false;
     });
     
