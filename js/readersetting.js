@@ -1,4 +1,5 @@
 var reader_id = "";
+var m_table;
 
 ////////////////////////////////////////////////////////////////////////////////
 window.onload = function() {
@@ -123,6 +124,16 @@ $(document).ready(function() {
         $('#mod_reader_header').html("New Reader Setting");
     });
     
+    // rating user list edit button click //////////////////////////////////////
+    $('table').on('click', 'a[id^="edit_reader_id_"]', function() {
+        reader_id = $(this).attr('id').replace("edit_reader_id_", "");
+        $('#mod_reader_header').html("Edit Reader Setting");
+        
+        resetModReaderInfo();
+        getSelectedReaderInfo();
+        $('#mod_reader').modal('show');
+    });
+    
     // modal reader save button click //////////////////////////////////////////
     $('#mod_btn_reader_save').click(function() {
         var reader_name = $.trim(textReplaceApostrophe($('#mod_reader_mame').val()));
@@ -148,17 +159,12 @@ $(document).ready(function() {
         
         swal({title: "Saved!", text: note, type: "success"});
         $('#mod_reader').modal('hide');
+        getReaderList();
         return false;
     });
     
-    // rating user list edit button click //////////////////////////////////////
-    $(document).on('click', 'button[id^="btn_reader_edit_"]', function() {
-        reader_id = $(this).attr('id').replace("btn_reader_edit_", "");
-        $('#mod_reader_header').html("Edit Reader Setting");
-        
-        resetModReaderInfo();
-        getSelectedReaderInfo();
-    });
+    // jquery datatables initialize ////////////////////////////////////////////
+    m_table = $('#tbl_reader_list').DataTable({ paging: false, bInfo: false, searching: false });
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 });
@@ -268,90 +274,97 @@ function getSelectedReaderInfo() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function setReaderHTML(id) {
-    var html = "<div class='row' id='reader_id_" + id + "'>";
-    html += "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
-    html += "<div class='hpanel hblue contact-panel'>";
-    html += "<div class='panel-body'>";  
+//function setReaderHTML(id) {
+//    var html = "<div class='row' id='reader_id_" + id + "'>";
+//    html += "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12'>";
+//    html += "<div class='hpanel hblue contact-panel'>";
+//    html += "<div class='panel-body'>";  
+//
+//    html += "<div class='row'>";
+//    html += "<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>Reader Name:</div>";
+//    html += "<div class='col-xs-6 col-sm-8 col-md-9 col-lg-10' id='reader_name_" + id + "'></div>";
+//    html += "</div>";
+//    html += "<br/>";
+//    html += "<div class='row'>";
+//    html += "<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>Reader Email:</div>";
+//    html += "<div class='col-xs-6 col-sm-8 col-md-9 col-lg-10' id='reader_email_" + id + "'></div>";
+//    html += "</div>";
+//    html += "<br/>";
+//    html += "<div class='row'>";
+//    html += "<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>";
+//    html += "<label><input type='checkbox' class='i-checks' disabled id='reader_active_" + id + "'> Active</label>";
+//    html += "</div>";
+//    html += "</div>";
+//    html += "<br/>";
+//    html += "<p>";
+//    html += "<button type='button' class='btn btn-primary w-xs' data-toggle='modal' data-target='#mod_reader' id='btn_reader_edit_" + id + "'>Edit</button>";
+//    html += "</p>";
+//    
+//    html += "</div>";
+//    html += "</div>";
+//    html += "</div>";
+//    html += "</div>";
+//    
+//    $('#reader_list').append(html);
+//}
 
-    html += "<div class='row'>";
-    html += "<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>Reader Name:</div>";
-    html += "<div class='col-xs-6 col-sm-8 col-md-9 col-lg-10' id='reader_name_" + id + "'></div>";
-    html += "</div>";
-    html += "<br/>";
-    html += "<div class='row'>";
-    html += "<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>Reader Email:</div>";
-    html += "<div class='col-xs-6 col-sm-8 col-md-9 col-lg-10' id='reader_email_" + id + "'></div>";
-    html += "</div>";
-    html += "<br/>";
-    html += "<div class='row'>";
-    html += "<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>";
-    html += "<label><input type='checkbox' class='i-checks' disabled id='reader_active_" + id + "'> Active</label>";
-    html += "</div>";
-    html += "</div>";
-    html += "<br/>";
-    html += "<p>";
-    html += "<button type='button' class='btn btn-primary w-xs' data-toggle='modal' data-target='#mod_reader' id='btn_reader_edit_" + id + "'>Edit</button>";
-    html += "</p>";
-    
-    html += "</div>";
-    html += "</div>";
-    html += "</div>";
-    html += "</div>";
-    
-    $('#reader_list').append(html);
-}
-
-function setReaderValues(id, active, reader_name, reader_email) {   
-    $('#reader_name_' + id).html(reader_name);
-    $('#reader_email_' + id).html(reader_email);
-    
-    if (active === "1" || active === true) {
-        $('#reader_active_' + id).prop('checked', true);
-    }
-    else {
-        $('#reader_active_' + id).prop('checked', false);
-    }
-}
+//function setReaderValues(id, active, reader_name, reader_email) {   
+//    $('#reader_name_' + id).html(reader_name);
+//    $('#reader_email_' + id).html(reader_email);
+//    
+//    if (active === "1" || active === true) {
+//        $('#reader_active_' + id).prop('checked', true);
+//    }
+//    else {
+//        $('#reader_active_' + id).prop('checked', false);
+//    }
+//}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function getReaderList() {
     var result = new Array();
-    result = db_getReaderList();
+    result = db_getReaderList2();
     
-    $('#reader_list').empty();
-    for (var i = 0; i < result.length; i++) {
-        setReaderHTML(result[i]['ReaderID']);
-        setReaderValues(result[i]['ReaderID'], result[i]['Active'], result[i]['ReaderName'], result[i]['ReaderEmail']);
-    }
-    
-    $('.i-checks').iCheck({
-        checkboxClass: 'icheckbox_square-green',
-        radioClass: 'iradio_square-green'
-    });
+    m_table.clear();
+    m_table.rows.add(result).draw();
     
     $('.animate-panel').animatePanel();
+    
+//    $('#reader_list').empty();
+//    for (var i = 0; i < result.length; i++) {
+//        setReaderHTML(result[i]['ReaderID']);
+//        setReaderValues(result[i]['ReaderID'], result[i]['Active'], result[i]['ReaderName'], result[i]['ReaderEmail']);
+//    }
+//    
+//    $('.i-checks').iCheck({
+//        checkboxClass: 'icheckbox_square-green',
+//        radioClass: 'iradio_square-green'
+//    });
+//    
+//    $('.animate-panel').animatePanel();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function addReaderToDB(active, reader_name, reader_email) {
     reader_id = db_insertReader(active, reader_name, reader_email);
-    setReaderHTML(reader_id);
-    setReaderValues(reader_id, active, reader_name, reader_email);
-    
-    $('.i-checks').iCheck({
-        checkboxClass: 'icheckbox_square-green',
-        radioClass: 'iradio_square-green'
-    });
+//    setReaderHTML(reader_id);
+//    setReaderValues(reader_id, active, reader_name, reader_email);
+//    
+//    $('.i-checks').iCheck({
+//        checkboxClass: 'icheckbox_square-green',
+//        radioClass: 'iradio_square-green'
+//    });
 }
 
 function updateReaderToDB(active, reader_name, reader_email) {
-    if (db_updateReader(reader_id, active, reader_name, reader_email)) {
-        setReaderValues(reader_id, active, reader_name, reader_email);
-    }
+    db_updateReader(reader_id, active, reader_name, reader_email);
     
-    $('.i-checks').iCheck({
-        checkboxClass: 'icheckbox_square-green',
-        radioClass: 'iradio_square-green'
-    });
+//    if (db_updateReader(reader_id, active, reader_name, reader_email)) {
+//        setReaderValues(reader_id, active, reader_name, reader_email);
+//    }
+//    
+//    $('.i-checks').iCheck({
+//        checkboxClass: 'icheckbox_square-green',
+//        radioClass: 'iradio_square-green'
+//    });
 }
