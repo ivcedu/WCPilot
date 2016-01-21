@@ -177,6 +177,19 @@ function db_getAdminList() {
     return result;
 }
 
+function db_getAdminList2() {
+    var result = new Array();
+    $.ajax({
+        type:"POST",
+        url:"php/db_getAdminList2.php",
+        async: false,  
+        success:function(data) {
+            result = JSON.parse(data);
+        }
+    });
+    return result;
+}
+
 function db_getSelectedAdmin(AdminID) {
     var result = new Array();
     $.ajax({
