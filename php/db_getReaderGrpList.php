@@ -6,7 +6,7 @@
             . "(SELECT ReaderName FROM [IVCWCPILOT].[dbo].[Reader] WHERE ReaderID = R2ID) AS R2Name, "
             . "(SELECT ReaderName FROM [IVCWCPILOT].[dbo].[Reader] WHERE ReaderID = R3ID) AS R3Name "
             . "FROM [IVCWCPILOT].[dbo].[ReaderGrp] "
-            . "ORDER BY ReaderGrpID ASC";
+            . "ORDER BY GrpName ASC";
 
     $cmd = $dbConn->prepare($query);
     $cmd->execute(); 
