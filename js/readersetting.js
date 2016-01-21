@@ -147,6 +147,7 @@ $(document).ready(function() {
         }
         
         swal({title: "Saved!", text: note, type: "success"});
+        $('#mod_reader').modal('hide');
         return false;
     });
     
