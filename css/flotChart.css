@@ -1,0 +1,11 @@
+.flot-chart-pie-content {
+    width: 200px;
+    height: 200px;
+    margin: auto;
+}
+
+.flot-pie-chart {
+    display: block;
+    padding-top: 50px;
+    height: 300px;
+}

@@ -3,16 +3,16 @@
     
     $dbConn->setAttribute(constant('PDO::SQLSRV_ATTR_DIRECT_QUERY'), true);
     
-    $query_create_table = "CREATE TABLE #RESULT(Instruction nvarchar(255), TotalRecords int, Duration int, FinalScore DECIMAL(3,2))";
+    $query_create_table = "CREATE TABLE #RESULT(InstructionID int, Instruction nvarchar(255), TotalRecords int, Duration int, FinalScore DECIMAL(3,2))";
     
-    $query_insert = "INSERT INTO #RESULT SELECT inst.Title, COUNT(*) OVER(), wspl.Duration, "
+    $query_insert = "INSERT INTO #RESULT SELECT inst.InstructionID, inst.Title, COUNT(*) OVER(), wspl.Duration, "
                     . "CONVERT(DECIMAL(3,2), CASE WHEN scre.R3Score IS NULL THEN (scre.R1Score + scre.R2Score)/2 ELSE scre.R3Score END) AS FinalScore "
                     . "FROM [IVCWCPILOT].[dbo].[WSample] AS wspl LEFT JOIN [IVCWCPILOT].[dbo].[Score] AS scre ON wspl.WSampleID = scre.WSampleID "
                     . "LEFT JOIN [IVCWCPILOT].[dbo].[Instruction] AS inst ON wspl.InstructionID = inst.InstructionID "
                     . "WHERE wspl.StatusID = 3";
     
-    $query_get_result = "SELECT Instruction, TotalRecords, COUNT(Instruction) AS InstructonCount, AVG(Duration) AS AvgDuration, CONVERT(DECIMAL(3,2), AVG(FinalScore)) AS AvgScore "
-                        . "FROM #RESULT GROUP BY Instruction, TotalRecords";
+    $query_get_result = "SELECT InstructionID, Instruction, TotalRecords, COUNT(Instruction) AS InstructonCount, AVG(Duration) AS AvgDuration, CONVERT(DECIMAL(3,2), AVG(FinalScore)) AS AvgScore "
+                        . "FROM #RESULT GROUP BY InstructionID, Instruction, TotalRecords";
     
     $query_drop_table = "DROP TABLE #RESULT";
     

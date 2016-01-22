@@ -117,6 +117,13 @@ $(document).ready(function() {
         window.open('login.html', '_self');
         return false;
     });
+    
+//    var chart_options = {
+//        series: { pie: { show: true} }
+//    };
+//    var data = [{ label: "Data 1", data: 13, color: "#84c465"}, { label: "Data 2", data: 88, color: "#c7eeb4"}];
+//    $.plot($('#flot_pie_chart_1'), data, chart_options);
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 });
@@ -226,37 +233,44 @@ function getDashboardList() {
             str_html_end = "</div>";
         }
         
-        var str_inst_summary = setDashboardListHTML(result[i]['Instruction'], result[i]['TotalRecords'], result[i]['InstructonCount'], result[i]['AvgDuration'], result[i]['AvgScore']);
+        var str_inst_summary = setDashboardListHTML(result[i]['InstructionID'], result[i]['Instruction'], result[i]['TotalRecords'], result[i]['InstructonCount'], result[i]['AvgDuration'], result[i]['AvgScore']);
         str_html += str_html_start + str_inst_summary + str_html_end;
     }
     $('#dashboard_list').append(str_html);
+    drawFlotPieChart(result);
     
     $('.animate-panel').animatePanel();
 }
 
-function setDashboardListHTML(instruction, total_records, instruction_count, avg_duration, avg_score) {    
+function setDashboardListHTML(instruction_id, instruction, total_records, instruction_count, avg_duration, avg_score) {    
     var html = "<div class='col-lg-4'><div class='hpanel stats'>";
     html += "<div class='panel-body h-200'>";
     html += "<div class='row'>";
-    html += "<div class='col-lg-10'><div class='stats-title pull-left'><h4>" + instruction + "</h4></div></div>";
+    html += "<div class='col-lg-10'><div class='stats-title pull-left'><h3>" + instruction + "</h3></div></div>";
     html += "<div class='col-lg-2'><div class='stats-icon pull-right'><i class='pe-7s-share fa-4x'></i></div></div>";
     html += "</div>";
     html += "<div class='m-t-xl'>";
     
     html += "<span class='font-bold no-margins'>Average Duration: " + avg_duration + " min</span>";
-    html += "<div class='progress m-t-xs full progress-small'>";
+    html += "<div class='progress m-t-xs full progress'>";
     html += "<div style='width: " + (Number(avg_duration)/60)*100 + "%' aria-valuemax='60' aria-valuemin='0' aria-valuenow='" + avg_duration + "' role='progressbar' class='progress-bar progress-bar-success'></div>";
     html += "</div>";
     
     html += "<span class='font-bold no-margins'>Average Score: " + avg_score + " </span>";
-    html += "<div class='progress m-t-xs full progress-small'>";
+    html += "<div class='progress m-t-xs full progress'>";
     html += "<div style='width: " + (Number(avg_score)/6)*100 + "%' aria-valuemax='6' aria-valuemin='0' aria-valuenow='" + avg_score + "' role='progressbar' class='progress-bar progress-bar-success'></div>";
     html += "</div>";
     
     html += "<div class='row'>";
     html += "<div class='col-xs-6'>";
-    html += "<small class='stats-label'>Count / Total Records</small>";
+    html += "<span class='font-bold no-margins'>Count / Total Records</span>";
     html += "<h4>" + instruction_count + " / " + total_records + "</h4>";
+    html += "</div>";
+    html += "</div>";
+    
+    html += "<div class='row'>";
+    html += "<div class='flot-pie-chart'>";
+    html += "<div class='flot-chart-pie-content' style='width: 100%; height: 100%' id='flot_pie_chart_" + instruction_id + "'></div>";
     html += "</div>";
     html += "</div>";
     
@@ -266,4 +280,16 @@ function setDashboardListHTML(instruction, total_records, instruction_count, avg
     html += "</div></div>";
     
     return html;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function drawFlotPieChart(result) {     
+    for (var i = 0; i < result.length; i++) {
+        var inst_id = result[i]['InstructionID'];
+        var inst_count = Number(result[i]['InstructonCount']);
+        var total_count = Number(result[i]['TotalRecords']) - Number(result[i]['InstructonCount']);
+        
+        var data = [{ lable: "Selected", data: inst_count, color: "#84c465"}, { lable: "Total Count", data: total_count, color: "#cccccc"}];
+        $.plot($('#flot_pie_chart_' + inst_id), data, { series: { pie: { show: true } } });
+    }
 }
