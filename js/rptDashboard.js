@@ -117,13 +117,6 @@ $(document).ready(function() {
         window.open('login.html', '_self');
         return false;
     });
-    
-//    var chart_options = {
-//        series: { pie: { show: true} }
-//    };
-//    var data = [{ label: "Data 1", data: 13, color: "#84c465"}, { label: "Data 2", data: 88, color: "#c7eeb4"}];
-//    $.plot($('#flot_pie_chart_1'), data, chart_options);
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 });
@@ -299,8 +292,8 @@ function drawPieChart(result) {
         var inst_count = Number(result[i]['InstructonCount']);
         var total_count = Number(result[i]['TotalRecords']) - Number(result[i]['InstructonCount']);        
         var data = [{ value: inst_count, color: "#84c465", highlight: "#b5dca3", label: "Count" }, { value: total_count, color: "#cccccc", highlight: "#d9d9d9", label: "Other" }];
-        
-        var ctx = document.getElementById("flot_pie_chart_" + inst_id).getContext("2d");
+
+        var ctx = $("#flot_pie_chart_" + inst_id).get(0).getContext("2d");
         new Chart(ctx).Pie(data, pie_options);
     }
 }
