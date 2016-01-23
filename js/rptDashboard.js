@@ -237,7 +237,7 @@ function getDashboardList() {
         str_html += str_html_start + str_inst_summary + str_html_end;
     }
     $('#dashboard_list').append(str_html);
-    drawFlotPieChart(result);
+    drawPieChart(result);
     
     $('.animate-panel').animatePanel();
 }
@@ -269,9 +269,7 @@ function setDashboardListHTML(instruction_id, instruction, total_records, instru
     html += "</div>";
     
     html += "<div class='row'>";
-    html += "<div class='flot-pie-chart'>";
-    html += "<div class='flot-chart-pie-content' style='width: 100%; height: 100%' id='flot_pie_chart_" + instruction_id + "'></div>";
-    html += "</div>";
+    html += "<canvas id='flot_pie_chart_" + instruction_id + "' height='140'></canvas>";
     html += "</div>";
     
     html += "</div>";
@@ -283,13 +281,26 @@ function setDashboardListHTML(instruction_id, instruction, total_records, instru
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function drawFlotPieChart(result) {     
+function drawPieChart(result) {  
+    var pie_options = { 
+        segmentShowStroke: true,
+        segmentStrokeColor: "#fff",
+        segmentStrokeWidth: 2,
+        percentageInnerCutout: 0, // This is 0 for Pie charts
+        animationSteps: 100,
+        animationEasing: "easeOutBounce",
+        animateRotate: true,
+        animateScale: false,
+        responsive: true
+    };
+    
     for (var i = 0; i < result.length; i++) {
         var inst_id = result[i]['InstructionID'];
         var inst_count = Number(result[i]['InstructonCount']);
-        var total_count = Number(result[i]['TotalRecords']) - Number(result[i]['InstructonCount']);
+        var total_count = Number(result[i]['TotalRecords']) - Number(result[i]['InstructonCount']);        
+        var data = [{ value: inst_count, color: "#84c465", highlight: "#b5dca3", label: "Count" }, { value: total_count, color: "#cccccc", highlight: "#d9d9d9", label: "Other" }];
         
-        var data = [{ lable: "Selected", data: inst_count, color: "#84c465"}, { lable: "Total Count", data: total_count, color: "#cccccc"}];
-        $.plot($('#flot_pie_chart_' + inst_id), data, { series: { pie: { show: true } } });
+        var ctx = document.getElementById("flot_pie_chart_" + inst_id).getContext("2d");
+        new Chart(ctx).Pie(data, pie_options);
     }
 }
