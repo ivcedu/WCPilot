@@ -244,19 +244,19 @@ function setDashboardListHTML(instruction_id, instruction, total_records, instru
     html += "</div>";
     html += "<div class='m-t-xl'>";
     
-    html += "<span class='font-bold no-margins'>Average Duration: " + avg_duration + " min</span>";
+    html += "<span class='font-bold no-margins'><h4>Average Duration: " + avg_duration + " min</h4></span>";
     html += "<div class='progress m-t-xs full progress'>";
     html += "<div style='width: " + (Number(avg_duration)/60)*100 + "%' aria-valuemax='60' aria-valuemin='0' aria-valuenow='" + avg_duration + "' role='progressbar' class='progress-bar progress-bar-success'></div>";
     html += "</div>";
     
-    html += "<span class='font-bold no-margins'>Average Score: " + avg_score + " </span>";
+    html += "<span class='font-bold no-margins'><h4>Average Score: " + avg_score + " </h4></span>";
     html += "<div class='progress m-t-xs full progress'>";
     html += "<div style='width: " + (Number(avg_score)/6)*100 + "%' aria-valuemax='6' aria-valuemin='0' aria-valuenow='" + avg_score + "' role='progressbar' class='progress-bar progress-bar-success'></div>";
     html += "</div>";
     
     html += "<div class='row'>";
     html += "<div class='col-xs-6'>";
-    html += "<span class='font-bold no-margins'>Count / Total Records</span>";
+    html += "<span class='font-bold no-margins'><h4>Count / Total Records</h4></span>";
     html += "<h4>" + instruction_count + " / " + total_records + "</h4>";
     html += "</div>";
     html += "</div>";
@@ -284,15 +284,21 @@ function drawPieChart(result) {
         animationEasing: "easeOutBounce",
         animateRotate: true,
         animateScale: false,
-        responsive: true
+        responsive: true,
+        tooltipTemplate: "<%= value %>%"
     };
     
     for (var i = 0; i < result.length; i++) {
         var inst_id = result[i]['InstructionID'];
         var inst_count = Number(result[i]['InstructonCount']);
-        var total_count = Number(result[i]['TotalRecords']) - Number(result[i]['InstructonCount']);        
-        var data = [{ value: inst_count, color: "#84c465", highlight: "#b5dca3", label: "Count" }, { value: total_count, color: "#cccccc", highlight: "#d9d9d9", label: "Other" }];
-
+        var other_count = Number(result[i]['TotalRecords']) - Number(result[i]['InstructonCount']);
+        var total_count = Number(result[i]['TotalRecords']);
+        var str_per_inst = ((inst_count / total_count) * 100).toFixed(2);
+        var str_per_oth = ((other_count / total_count) * 100).toFixed(2);
+        var per_inst = Number(str_per_inst);
+        var per_oth = Number(str_per_oth);
+        
+        var data = [{ value: per_inst, color: "#84c465", highlight: "#b5dca3" }, { value: per_oth, color: "#cccccc", highlight: "#d9d9d9" }];
         var ctx = $("#flot_pie_chart_" + inst_id).get(0).getContext("2d");
         new Chart(ctx).Pie(data, pie_options);
     }
