@@ -293,10 +293,8 @@ function drawPieChart(result) {
         var inst_count = Number(result[i]['InstructonCount']);
         var other_count = Number(result[i]['TotalRecords']) - Number(result[i]['InstructonCount']);
         var total_count = Number(result[i]['TotalRecords']);
-        var str_per_inst = ((inst_count / total_count) * 100).toFixed(2);
-        var str_per_oth = ((other_count / total_count) * 100).toFixed(2);
-        var per_inst = Number(str_per_inst);
-        var per_oth = Number(str_per_oth);
+        var per_inst = Math.round((inst_count / total_count) * 10000) / 100;
+        var per_oth = Math.round((other_count / total_count) * 10000) / 100;
         
         var data = [{ value: per_inst, color: "#84c465", highlight: "#b5dca3" }, { value: per_oth, color: "#cccccc", highlight: "#d9d9d9" }];
         var ctx = $("#flot_pie_chart_" + inst_id).get(0).getContext("2d");
