@@ -64,7 +64,17 @@ $(document).ready(function() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Initialize summernote plugin
-    $('.summernote').summernote({ height: 600 });
+    $('.summernote').summernote({ 
+        height: 600,
+        toolbar: [
+                    ['headline', ['style']],
+                    ['style', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear']],
+                    ['textsize', ['fontsize']],
+                    ['alignment', ['ul', 'ol', 'paragraph', 'lineheight']]
+                ]
+    });
+    // disable spell check
+    $('body').attr('spellcheck',false);
 
     // Initialize time circles
     $("#CountDownTimer").TimeCircles({ 
