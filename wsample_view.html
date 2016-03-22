@@ -64,32 +64,39 @@
             <div class="normalheader transition animated fadeIn">
                 <div class="hpanel">
                     <div class="panel-body">
-                        <h3 class="font-light m-b-xs" id="panel_header"></h3>
-                        <br/>
-                        <div class="row form-horizontal">
-                            <div class="col-sx-2 col-sm-2 col-md-1 col-lg-1" style="padding-top: 7px;">Score:</div>
-                            <div class="col-sx-4 col-sm-3 col-md-2 col-lg-1">
-                                <select class="selectpicker form-control" data-container="body" id="score_list">
-                                    <option selected="selected" value="0">Select</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                </select>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <h3 class="font-light m-b-xs" id="panel_header"></h3>
                             </div>
-                            <div class="col-sx-4 col-sm-3 col-md-2 col-lg-1" style="padding-top: 5px;">
-                                <label><input type="checkbox" class="i-checks" id="score_esl"> ESL</label>
+                            <br/>
+                            <div class="row form-horizontal">
+                                <div class="col-sx-4 col-sm-4 col-md-4 col-lg-2 font-bold" style="padding-top: 7px;">Score:</div>
+                                <div class="col-sx-4 col-sm-4 col-md-4 col-lg-2">
+                                    <select class="selectpicker form-control" data-container="body" id="score_list">
+                                        <option selected="selected" value="0">Select</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </div>
+                                <div class="col-sx-4 col-sm-4 col-md-4 col-lg-2" style="padding-top: 5px;">
+                                    <label><input type="checkbox" class="i-checks" id="score_esl"> ESL</label>
+                                </div>
                             </div>
-                            <div class="col-sx-4 col-sm-3 col-md-2 col-lg-1">
-                                <button type="button" class="btn btn-primary" id="btn_submit"><i class="fa fa-check"></i> Submit</button>
-                            </div>
-                            <div class="col-sx-4 col-sm-3 col-md-2 col-lg-1">
-                                <button type="button" class="btn btn-outline btn-info" id="btn_score_guide"><i class="fa fa-file-pdf-o"></i> Scoring Guide</button>
-                            </div>
-                            <div class="col-sx-4 col-sm-3 col-md-2 col-lg-1">
-                                <button type="button" class="btn btn-outline btn-info" id="btn_generic_prompt"><i class="fa fa-file-pdf-o"></i> Generic Prompt</button>
+                            <br/>
+                            <div class="row form-horizontal">
+                                <div class="col-sx-4 col-sm-4 col-md-4 col-lg-2">
+                                    <button type="button" class="btn btn-primary col-xs-12 col-sm-12 col-md-12 col-lg-12" id="btn_submit"><i class="fa fa-check"></i> Submit</button>
+                                </div>
+                                <div class="col-sx-4 col-sm-4 col-md-4 col-lg-2">
+                                    <button type="button" class="btn btn-outline btn-info col-xs-12 col-sm-12 col-md-12 col-lg-12" id="btn_score_guide"><i class="fa fa-file-pdf-o"></i> Scoring Guide</button>
+                                </div>
+                                <div class="col-sx-4 col-sm-4 col-md-4 col-lg-2">
+                                    <button type="button" class="btn btn-outline btn-info col-xs-12 col-sm-12 col-md-12 col-lg-12" id="btn_generic_prompt"><i class="fa fa-file-pdf-o"></i> Generic Prompt</button>
+                                </div>
                             </div>
                         </div>
                     </div>
