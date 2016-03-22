@@ -157,9 +157,10 @@ $(document).ready(function() {
             note += "\nPlease update Reader Group setting";
         }
         
-        swal({title: "Saved!", text: note, type: "success"});
         $('#mod_reader').modal('hide');
         getReaderList();
+        
+        setTimeout(function(){ swal({title: "Saved!", text: note, type: "success"}); }, 500);
         return false;
     });
     

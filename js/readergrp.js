@@ -153,8 +153,9 @@ $(document).ready(function() {
             updateReaderGrpToDB(grp_name, grp_enable, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name);
         }
         
-        swal({title: "Saved!", text: "Reader group has been saved", type: "success"});
         $('#mod_reader_grp').modal('hide');
+//        setTimeout(function(){ swal({title: "Saved!", text: "Reader group has been saved", type: "success"}); }, 500);
+        
         return false;
     });
     
@@ -163,8 +164,9 @@ $(document).ready(function() {
         var reader_grp_id = $('#mod_body_select_grp').val();
         db_updateReaderGrpCurrentActive(reader_grp_id);
         
-        swal({title: "Saved!", text: "Assigned new active reader group has been saved", type: "success"});
         $('#mod_select_grp').modal('hide');
+        setTimeout(function(){ swal({title: "Saved!", text: "Assigned new active reader group has been saved", type: "success"}); }, 500);
+        
         return false;
     });
     

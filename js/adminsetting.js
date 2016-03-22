@@ -166,16 +166,12 @@ $(document).ready(function() {
             updateAdminToDB(admin_name, admin_email);
         }
         
-        swal({title: "Saved!", text: "Admin has been saved", type: "success"});
         $('#mod_admin').modal('hide');
         getAdminList();
+        
+//        setTimeout(function(){ swal({title: "Saved!", text: "Admin has been saved", type: "success"}); }, 500);
         return false;
     });
-    
-    // table header click event ////////////////////////////////////////////////
-//    $('#tbl_admin_list thead').on('click', 'th', function () {
-//        $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
-//    });
     
     // jquery datatables initialize ////////////////////////////////////////////
     m_table = $('#tbl_admin_list').DataTable({ paging: false, bInfo: false, searching: false });
