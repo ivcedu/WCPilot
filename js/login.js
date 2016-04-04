@@ -72,6 +72,8 @@ $(document).ready(function() {
             $('#logn_error').show();
         }
     });
+    
+    $.backstretch(["images/wcpilot_back_web_1.jpg"], {duration: 3000, fade: 750});
 });
 
 ////////////////////////////////////////////////////////////////////////////////

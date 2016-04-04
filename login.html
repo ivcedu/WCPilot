@@ -16,16 +16,14 @@
         <link rel="stylesheet" href="../homer-1.5/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"/>
         <link rel="stylesheet" href="../homer-1.5/fonts/pe-icon-7-stroke/css/helper.css"/>
         <link rel="stylesheet" href="../homer-1.5/styles/style.css"/>
-        <link rel="stylesheet" href="../homer-1.5/styles/static_custom.css">
         <!-- application css -->
-        <link rel="stylesheet" href="css/login.css"/>
     </head>
     <body>
         <div class="login-container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-center m-b-md">
-                        <h3 class="font-bold">Writing Assessment</h3>
+                        <h3 style="color: white;">Writing Assessment</h3>
                     </div>
                     <div class="hpanel">
                         <div class="panel-body">
@@ -62,6 +60,7 @@
         <script src="../homer-1.5/vendor/sweetalert/lib/sweet-alert.min.js"></script>
         <!-- include javascript -->
         <script src="../include/bowser/bowser.min.js"></script>
+        <script src="../include/utilities/js/jquery.backstretch.min.js"></script>
         <!-- application javascript -->
         <script src="js/login.js"></script>
         <script src="js/session_data.js"></script>
