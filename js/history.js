@@ -5,11 +5,13 @@ var m_table;
 window.onload = function() {
     if (sessionStorage.key(0) !== null) {   
         $('.splash').css('display', 'none');
+        $('#start_date').hide();
+        $('#end_date').hide();
         if (!getAdminByEmail()) {
             hideSideMenu();
         }  
         getLoginInfo();
-        getWSampleList();
+        getWSampleList(3, "All", "", "");
     }
     else {
         window.open('Login.html', '_self');
@@ -123,6 +125,37 @@ $(document).ready(function() {
         window.open('login.html', '_self');
         return false;
     });
+    
+    // radio all button click event ////////////////////////////////////////////
+    $('#rdo_all').on('ifChecked', function() {
+        $('#start_date').val("");
+        $('#end_date').val("");
+        $('#start_date').hide();
+        $('#end_date').hide();
+    });
+    
+    // radio date range button click event /////////////////////////////////////
+    $('#rdo_date_range').on('ifChecked', function() {
+        $('#start_date').show();
+        $('#end_date').show();
+    });
+
+    // refresh button click ////////////////////////////////////////////////////
+    $('#btn_refresh').click(function() {
+        var search_option = $("input[name=rdo_option]:checked").val();
+        var start_date = $('#start_date').val();
+        var end_date = $('#end_date').val();
+        
+        if (search_option === "Date_Range") {
+            if (start_date === "" || end_date === "") {
+                swal("Error", "Please select Start Date and End Date", "error");
+                return false;
+            }
+        }
+        
+        getWSampleList(3, search_option, start_date, end_date);
+        return false;
+    });
 
     // table header click event ////////////////////////////////////////////////
     $('#tbl_wsample_list thead').on('click', 'th', function () {
@@ -138,6 +171,10 @@ $(document).ready(function() {
     
     // jquery datatables initialize ////////////////////////////////////////////
     m_table = $('#tbl_wsample_list').DataTable({ paging: false, bInfo: false, scrollX: true });
+    
+    // bootstrap datepicker
+    $('#start_date').datepicker();
+    $('#end_date').datepicker();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 });
@@ -233,9 +270,9 @@ function getAdminByEmail() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function getWSampleList() {
+function getWSampleList(status_id, search_option, start_date, end_date) {
     var result = new Array();
-    result = db_getWSampleList(3);
+    result = db_getWSampleList(status_id, search_option, start_date, end_date);
     
     m_table.clear();
     m_table.rows.add(result).draw();

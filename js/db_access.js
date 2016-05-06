@@ -231,12 +231,12 @@ function db_getWSample(WSampleID) {
     return result;
 }
 
-function db_getWSampleList(StatusID) {
+function db_getWSampleList(StatusID, SearchOption, StartDate, EndDate) {
     var result = new Array();
     $.ajax({
         type:"POST",
         url:"php/db_getWSampleList.php",
-        data:{StatusID:StatusID},
+        data:{StatusID:StatusID, SearchOption:SearchOption, StartDate:StartDate, EndDate:EndDate},
         async: false,  
         success:function(data) {
             result = JSON.parse(data);
@@ -245,12 +245,12 @@ function db_getWSampleList(StatusID) {
     return result;
 }
 
-function db_getPlacementList(StatusID) {
+function db_getPlacementList(StatusID, SearchOption, StartDate, EndDate) {
     var result = new Array();
     $.ajax({
         type:"POST",
         url:"php/db_getPlacementList.php",
-        data:{StatusID:StatusID},
+        data:{StatusID:StatusID, SearchOption:SearchOption, StartDate:StartDate, EndDate:EndDate},
         async: false,  
         success:function(data) {
             result = JSON.parse(data);
@@ -354,11 +354,12 @@ function db_getDashboardList() {
     return result;
 }
 
-function db_getDiscrepanciesList() {
+function db_getDiscrepanciesList(SearchOption, StartDate, EndDate) {
     var result = new Array();
     $.ajax({
         type:"POST",
         url:"php/db_getDiscrepanciesList.php",
+        data:{SearchOption:SearchOption, StartDate:StartDate, EndDate:EndDate},
         async: false,  
         success:function(data) {
             result = JSON.parse(data);
@@ -372,6 +373,20 @@ function db_getPendingList() {
     $.ajax({
         type:"POST",
         url:"php/db_getPendingList.php",
+        async: false,  
+        success:function(data) {
+            result = JSON.parse(data);
+        }
+    });
+    return result;
+}
+
+function db_getReaderCountList(SearchOption, StartDate, EndDate) {
+    var result = new Array();
+    $.ajax({
+        type:"POST",
+        url:"php/db_getReaderCountList.php",
+        data:{SearchOption:SearchOption, StartDate:StartDate, EndDate:EndDate},
         async: false,  
         success:function(data) {
             result = JSON.parse(data);

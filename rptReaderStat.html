@@ -5,19 +5,19 @@
         <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
         <meta http-equiv="Cache-Control" content="no-cache"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Admin Setting</title>
+        <title>Readers Essay Count List</title>
         <!-- homer-1.5 Vendor css -->
         <link rel="stylesheet" href="../homer-1.5/vendor/fontawesome/css/font-awesome.css"/>
         <link rel="stylesheet" href="../homer-1.5/vendor/metisMenu/dist/metisMenu.css"/>
         <link rel="stylesheet" href="../homer-1.5/vendor/animate.css/animate.css"/>
         <link rel="stylesheet" href="../homer-1.5/vendor/bootstrap/dist/css/bootstrap.css"/>
-        <link rel="stylesheet" href="../homer-1.5/vendor/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.css"/>
+        <link rel="stylesheet" href="../homer-1.5/vendor/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.css" />
         <!-- homer-1.5 App css -->
         <link rel="stylesheet" href="../homer-1.5/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"/>
         <link rel="stylesheet" href="../homer-1.5/fonts/pe-icon-7-stroke/css/helper.css"/>
         <link rel="stylesheet" href="../homer-1.5/styles/style.css"/>
-        <link rel="stylesheet" href="../homer-1.5/styles/static_custom.css">
         <!-- include css -->
+        <link rel="stylesheet" href="../include/jquery-ui-themes-1.11.4/themes/flick/jquery-ui.min.css"/>
         <link rel="stylesheet" href="../include/sweetalert/css/sweetalert.css"/>
         <!-- application css -->
     </head>
@@ -48,7 +48,7 @@
                     <li>
                         <a href="scores.html"><span class="nav-label">Waiting List</span></a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href=#><span class="nav-label">Reports</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li><a href="rptDashboard.html"><span class="nav-label">Dashboard</span></a></li>
@@ -56,16 +56,16 @@
                             <li><a href="history.html"><span class="nav-label">Completed List</span></a></li>
                             <li><a href="rptPlacement.html"><span class="nav-label">Placements</span></a></li>
                             <li><a href="rptDiscrepancies.html"><span class="nav-label">Discrepancies</span></a></li>
-                            <li><a href="rptReaderStat.html"><span class="nav-label">Reader Statistic</span></a></li>
+                            <li class="active"><a href="rptReaderStat.html"><span class="nav-label">Reader Statistic</span></a></li>
                         </ul>
                     </li>
-                    <li class="active" id="menu_administrator">
+                    <li id="menu_administrator">
                         <a href=#><span class="nav-label">Administrator</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li><a href="instSetting.html"><span class="nav-label">Instructions</span></a></li>
                             <li><a href="readersetting.html"><span class="nav-label">Readers</span></a></li>
                             <li><a href="readergrp.html"><span class="nav-label">Reader Group</span></a></li>
-                            <li class="active"><a href="adminsetting.html"><span class="nav-label">Administrators</span></a></li>
+                            <li><a href="adminsetting.html"><span class="nav-label">Administrators</span></a></li>
                         </ul>
                     </li>
                     <li>
@@ -82,12 +82,24 @@
                     <div class="panel-body">
                         <div class="container-fluid">
                             <div class="row">
-                                <h3 class="font-light m-b-xs text-center" id="panel_header">Administrator Setting</h3>
+                                <h3 class="font-light m-b-xs text-center">Readers Essay Count List</h3>  
                             </div>
-                            <br/>
-                            <div class="row">
+                            <br>
+                            <div class="row form-horizontal">
                                 <div class="col-md-2">
-                                    <button type="button" data-toggle="modal" data-target="#mod_admin" class="btn btn-primary col-md-12" id="btn_new_admin"><i class="fa fa-check"></i> New Admin</button>
+                                    <div class="radio"><label><input type="radio" class="i-checks" name="rdo_option" value="All" id="rdo_all" checked>&nbsp;&nbsp;&nbsp;All</label></div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="radio"><label><input type="radio" class="i-checks" name="rdo_option" value="Date_Range" id="rdo_date_range">&nbsp;&nbsp;&nbsp;Date Range</label></div>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" placeholder="click start date" readonly id="start_date">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" placeholder="click end date" readonly id="end_date">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary col-md-12" id="btn_refresh"><i class="fa fa-refresh"></i> Refresh</button>
                                 </div>
                             </div>
                         </div>
@@ -95,26 +107,21 @@
                 </div>
             </div>
             
-            <div class="content animate-panel">
+            <div class="content animate-panel">  
+                <!-- bar chart Chartjs -->
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="hpanel">
+                            <div class="panel-heading">
+                                <div class="panel-tools">
+                                    <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+                                    <a class="closebox"><i class="fa fa-times"></i></a>
+                                </div>
+                                Readers Essay Count
+                            </div>
                             <div class="panel-body">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <table id="tbl_admin_list" class="table table-striped table-bordered table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>Admin Name</th>
-                                                    <th>Admin Email</th>
-                                                    <th>Edit</th>
-                                                    <th>Delete</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="tbl_body">
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                <div>
+                                    <canvas id="bar_reader_count_list" height="50"></canvas>
                                 </div>
                             </div>
                             <div class="panel-footer">
@@ -122,38 +129,26 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <!--
-            <div class="content animate-panel">
-                <div id="admin_list"></div>
-            </div>
-            -->
-        </div>
-        
-        <!-- new reader modal -->
-        <div class="modal fade" id="mod_admin" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="color-line"></div>
-                    <div class="modal-header text-center">
-                        <h3 id="mod_admin_header"></h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-3" style="padding-top: 7px;">Admin Name:</div>
-                                <div class="col-md-9"><input class="col-md-12 form-control" type="text" id="mod_admin_mame"></div>
+                <!-- result table -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="hpanel">
+                            <div class="panel-body">
+                                <table id="tbl_reader_essay_count" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Reader</th>
+                                            <th>Essay Count</th>
+                                            <th>Avg Score</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbl_body">
+                                    </tbody>
+                                </table>
                             </div>
-                            <br/>
-                            <div class="row">
-                                <div class="col-md-3" style="padding-top: 7px;">Admin Email:</div>
-                                <div class="col-md-9"><input class="col-md-12 form-control" type="text" id="mod_admin_email"></div>
+                            <div class="panel-footer">
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="mod_btn_admin_save">Save</button>
                     </div>
                 </div>
             </div>
@@ -167,12 +162,16 @@
         <script src="../homer-1.5/vendor/metisMenu/dist/metisMenu.min.js"></script>
         <script src="../homer-1.5/vendor/iCheck/icheck.min.js"></script>
         <script src="../homer-1.5/vendor/sparkline/index.js"></script>
+        <script src="../homer-1.5/vendor/chartjs/Chart.min.js"></script>
         <script src="../homer-1.5/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
         <script src="../homer-1.5/vendor/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+        <!-- homer-1.9 custom javascript -->
+        <script src="../homer-1.5/scripts/homer.js"></script>
         <!-- include javascript -->
+        <script src="../include/jquery-ui-1.11.4/js/jquery-ui.min.js"></script>
         <script src="../include/sweetalert/js/sweetalert.min.js"></script>
         <!-- application javascript -->
-        <script src="js/adminsetting.js"></script>
+        <script src="js/rptReaderStat.js"></script>
         <script src="js/session_data.js"></script>
         <script src="js/db_access.js"></script>
     </body>

@@ -1,6 +1,15 @@
 <?php
     require("config.php");
     
+    $SearchOption = filter_input(INPUT_POST, 'SearchOption');
+    $StartDate = filter_input(INPUT_POST, 'StartDate');
+    $EndDate = filter_input(INPUT_POST, 'EndDate');
+    
+    $str_search_reader = "";
+    if ($SearchOption !== "All") {
+        $str_search_reader = " AND wspl.DTStart BETWEEN '".$StartDate."' AND '".$EndDate."'";
+    }
+    
     $query = "SELECT wspl.WSampleID AS WSampleID, "
             . "stud.StuID AS StudentID, "
             . "stud.StuName AS StudentName, "
@@ -18,7 +27,7 @@
             . "CASE WHEN (scre.R1Score - scre.R2Score) < 0 THEN (scre.R1Score - scre.R2Score) * -1 ELSE (scre.R1Score - scre.R2Score) END AS R1R2Split "
             . "FROM [IVCWCPILOT].[dbo].[WSample] AS wspl LEFT JOIN [IVCWCPILOT].[dbo].[Score] AS scre ON wspl.WSampleID = scre.WSampleID "
             . "LEFT JOIN [IVCWCPILOT].[dbo].[Student] AS stud ON wspl.StudentID = stud.StudentID "
-            . "WHERE wspl.StatusID = '3' AND (scre.R1Score - scre.R2Score) <> 0";
+            . "WHERE wspl.StatusID = '3' AND (scre.R1Score - scre.R2Score) <> 0".$str_search_reader;
     
     $cmd = $dbConn->prepare($query);
     $cmd->execute();

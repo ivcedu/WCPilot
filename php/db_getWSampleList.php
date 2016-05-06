@@ -2,6 +2,14 @@
     require("config.php");
     
     $StatusID = filter_input(INPUT_POST, 'StatusID');
+    $SearchOption = filter_input(INPUT_POST, 'SearchOption');
+    $StartDate = filter_input(INPUT_POST, 'StartDate');
+    $EndDate = filter_input(INPUT_POST, 'EndDate');
+    
+    $str_search_reader = "";
+    if ($SearchOption !== "All") {
+        $str_search_reader = " AND wspl.DTStart BETWEEN '".$StartDate."' AND '".$EndDate."'";
+    }
 
     $query = "SELECT wspl.WSampleID, "
             . "stud.StuID AS StudentID, "
@@ -23,7 +31,7 @@
             . "CONVERT(VARCHAR(10), scre.R3DateScore, 101) + STUFF(RIGHT(CONVERT(VARCHAR(26), scre.R3DateScore, 109), 15), 7, 7, ' ') AS R3DateScore "
             . "FROM [IVCWCPILOT].[dbo].[WSample] AS wspl LEFT JOIN [IVCWCPILOT].[dbo].[Score] AS scre ON wspl.WSampleID = scre.WSampleID "
             . "LEFT JOIN [IVCWCPILOT].[dbo].[Student] AS stud ON wspl.StudentID = stud.StudentID "
-            . "WHERE wspl.StatusID = '".$StatusID."'";
+            . "WHERE wspl.StatusID = '".$StatusID."'".$str_search_reader;
 
     $cmd = $dbConn->prepare($query);
     $cmd->execute(); 

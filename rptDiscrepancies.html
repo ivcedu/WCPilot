@@ -17,6 +17,8 @@
         <link rel="stylesheet" href="../homer-1.5/fonts/pe-icon-7-stroke/css/helper.css"/>
         <link rel="stylesheet" href="../homer-1.5/styles/style.css"/>
         <!-- include css -->
+        <link rel="stylesheet" href="../include/jquery-ui-themes-1.11.4/themes/flick/jquery-ui.min.css"/>
+        <link rel="stylesheet" href="../include/sweetalert/css/sweetalert.css"/>
         <!-- application css -->
     </head>
     <body>
@@ -53,6 +55,7 @@
                         <li><a href="history.html"><span class="nav-label">Completed List</span></a></li>
                         <li><a href="rptPlacement.html"><span class="nav-label">Placements</span></a></li>
                         <li class="active"><a href="rptDiscrepancies.html"><span class="nav-label">Discrepancies</span></a></li>
+                        <li><a href="rptReaderStat.html"><span class="nav-label">Reader Statistic</span></a></li>
                     </ul>
                 </li>
                 <li id="menu_administrator">
@@ -71,7 +74,37 @@
         </aside>
         
         <!-- Main Wrapper -->
-        <div id="wrapper">            
+        <div id="wrapper">     
+            <div class="normalheader transition animated fadeIn">
+                <div class="hpanel">
+                    <div class="panel-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <h3 class="font-light m-b-xs text-center">Writing Assessment Discrepancies List</h3>  
+                            </div>
+                            <br>
+                            <div class="row form-horizontal">
+                                <div class="col-md-2">
+                                    <div class="radio"><label><input type="radio" class="i-checks" name="rdo_option" value="All" id="rdo_all" checked>&nbsp;&nbsp;&nbsp;All</label></div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="radio"><label><input type="radio" class="i-checks" name="rdo_option" value="Date_Range" id="rdo_date_range">&nbsp;&nbsp;&nbsp;Date Range</label></div>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" placeholder="click start date" readonly id="start_date">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" placeholder="click end date" readonly id="end_date">
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary col-md-12" id="btn_refresh"><i class="fa fa-refresh"></i> Refresh</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="content animate-panel">                
                 <div class="row">
                     <div class="col-md-12">
@@ -121,6 +154,8 @@
         <script src="../homer-1.5/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
         <script src="../homer-1.5/vendor/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
         <!-- include javascript -->
+        <script src="../include/jquery-ui-1.11.4/js/jquery-ui.min.js"></script>
+        <script src="../include/sweetalert/js/sweetalert.min.js"></script>
         <!-- application javascript -->
         <script src="js/rptDiscrepancies.js"></script>
         <script src="js/session_data.js"></script>
