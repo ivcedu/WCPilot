@@ -166,8 +166,8 @@ $(document).ready(function() {
             updateAdminToDB(admin_name, admin_email);
         }
         
-        $('#mod_admin').modal('hide');
         getAdminList();
+        $('#mod_admin').modal('hide');
         
 //        setTimeout(function(){ swal({title: "Saved!", text: "Admin has been saved", type: "success"}); }, 500);
         return false;
@@ -269,74 +269,21 @@ function getSelectedAdminInfo() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//function setAdminHTML(id) {
-//    var html = "<div class='row' id='admin_id_" + id + "'>";
-//    html += "<div class='col-xs-12 col-sm-12 col-md-12'>";
-//    html += "<div class='hpanel hblue contact-panel'>";
-//    html += "<div class='panel-body'>";  
-//    
-//    html += "<div class='row'>";
-//    html += "<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>Admin Name:</div>";
-//    html += "<div class='col-xs-6 col-sm-8 col-md-9 col-lg-10' id='admin_name_" + id + "'></div>";
-//    html += "</div>";
-//    
-//    html += "<br/>";
-//    
-//    html += "<div class='row'>";
-//    html += "<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>Admin Email:</div>";
-//    html += "<div class='col-xs-6 col-sm-8 col-md-9 col-lg-10' id='admin_email_" + id + "'></div>";
-//    html += "</div>";
-//    
-//    html += "<br/>";
-//    
-//    html += "<p>";
-//    html += "<button type='button' class='btn btn-primary w-xs' data-toggle='modal' data-target='#mod_admin' id='btn_admin_edit_" + id + "'>Edit</button>";
-//    html += "<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-//    html += "<button type='button' class='btn btn-danger2 w-xs' id='btn_admin_delete_" + id + "'>Delete</button>";
-//    html += "</p>";
-//    
-//    html += "</div>";
-//    html += "</div>";
-//    html += "</div>";
-//    html += "</div>";
-//    
-//    $('#admin_list').append(html);
-//}
-
-function setAdminValues(id, admin_name, admin_email) {        
-    $('#admin_name_' + id).html(admin_name);
-    $('#admin_email_' + id).html(admin_email);
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function getAdminList() {
     var result = new Array();
     result = db_getAdminList2();
     
     m_table.clear();
     m_table.rows.add(result).draw();
-//    $('.dataTables_scrollBody thead tr').css({visibility:'collapse'});
     
     $('.animate-panel').animatePanel();
-    
-//    $('#admin_list').empty();
-//    for (var i = 0; i < result.length; i++) {
-//        setAdminHTML(result[i]['AdminID']);
-//        setAdminValues(result[i]['AdminID'], result[i]['AdminName'], result[i]['AdminEmail']);
-//    }
-//    
-//    $('.animate-panel').animatePanel();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function addAdminToDB(admin_name, admin_email) {
     admin_id = db_insertAdmin(admin_name, admin_email);
-    setAdminHTML(admin_id);
-    setAdminValues(admin_id, admin_name, admin_email);
 }
 
 function updateAdminToDB(admin_name, admin_email) {
-    if (db_updateAdmin(admin_id, admin_name, admin_email)) {
-        setAdminValues(admin_id, admin_name, admin_email);
-    }
+    db_updateAdmin(admin_id, admin_name, admin_email);
 }
