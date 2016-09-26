@@ -41,7 +41,7 @@ $(document).ready(function() {
         if(loginInfo()) {
             if (url_param === null) {
                 if (email === null || typeof email === 'Undefined') {
-                    swal({title: "Login Error", text: "There was an error getting your information from Active Direcy. please send an email to ivctech@ivc.edu to open a support request or call 949.451.5696", type: "error"});
+                    swal({title: "Login Error", text: "There was an error getting your information from Active Directory. please send an email to ivctech@ivc.edu to open a support request or call 949.451.5696", type: "error"});
                     return false;
                 }
                 else {
