@@ -13,7 +13,7 @@
         ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0);
 
         $ldapbind = ldap_bind($ldapconn, $login, $password);  
-        if($ldapbind) {
+        if($ldapbind) {            
             $filter = "(&(objectClass=user)(objectCategory=person)(cn=".$username."))";
             $ladp_result = ldap_search($ldapconn, $baseDN, $filter);
             $data = ldap_get_entries($ldapconn, $ladp_result);

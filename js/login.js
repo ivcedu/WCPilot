@@ -34,9 +34,6 @@ window.onload = function() {
 ////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {      
     $('#btn_login').click(function() { 
-        $('#error_msg').html("");
-        $('#logn_error').hide();
-
         var url_param = sessionStorage.getItem('ss_wcpilot_url_param');
         if(loginInfo()) {
             if (url_param === null) {
@@ -70,6 +67,7 @@ $(document).ready(function() {
         else {
             $('#error_msg').html("Invalid username or password");
             $('#logn_error').show();
+            return false;
         }
     });
     
