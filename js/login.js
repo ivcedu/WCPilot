@@ -33,41 +33,57 @@ window.onload = function() {
 
 ////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {      
-    $('#btn_login').click(function() { 
-        var url_param = sessionStorage.getItem('ss_wcpilot_url_param');
-        if(loginInfo()) {
-            if (url_param === null) {
-                if (email === null || typeof email === 'Undefined') {
-                    swal({title: "Login Error", text: "There was an error getting your information from Active Directory. please send an email to ivctech@ivc.edu to open a support request or call 949.451.5696", type: "error"});
-                    return false;
-                }
-                else {
-                    if (login_type === "Student") {
-                        sessionData_login(id, name, email, login_type);
-                        window.open('instruction.html', '_self'); 
+    $('#btn_login').click(function() {
+        // ireport.ivc.edu validation //////////////////////////////////////////
+        if(location.href.indexOf("ireport.ivc.edu") >= 0 && !ireportValidation()) {
+            swal({  title: "Access Denied",
+                    text: "This is a Development site. It will redirect to IVC Application site",
+                    type: "error",
+                    confirmButtonText: "OK" },
+                    function() {
+                        sessionStorage.clear();
+                        window.open('https://services.ivc.edu/', '_self');
+                        return false;
+                    }
+            );
+        }
+        ////////////////////////////////////////////////////////////////////////
+        else {
+            var url_param = sessionStorage.getItem('ss_wcpilot_url_param');
+            if(loginInfo()) {
+                if (url_param === null) {
+                    if (email === null || typeof email === 'Undefined') {
+                        swal({title: "Login Error", text: "There was an error getting your information from Active Directory. please send an email to ivctech@ivc.edu to open a support request or call 949.451.5696", type: "error"});
                         return false;
                     }
                     else {
-                        if (!staffValidation()) {
-                            swal({title: "Access Denied", text: "Only writing center staff or student can access", type: "error"});
+                        if (login_type === "Student") {
+                            sessionData_login(id, name, email, login_type);
+                            window.open('instruction.html', '_self'); 
                             return false;
                         }
-                        sessionData_login(id, name, email, login_type);
-                        window.open('scores.html', '_self');
-                        return false;
+                        else {
+                            if (!staffValidation()) {
+                                swal({title: "Access Denied", text: "Only writing center staff or student can access", type: "error"});
+                                return false;
+                            }
+                            sessionData_login(id, name, email, login_type);
+                            window.open('scores.html', '_self');
+                            return false;
+                        }
                     }
+                }
+                else {
+                    sessionData_login(id, name, email, login_type);
+                    window.open(url_param, '_self');
+                    return false;
                 }
             }
             else {
-                sessionData_login(id, name, email, login_type);
-                window.open(url_param, '_self');
+                $('#error_msg').html("Invalid username or password");
+                $('#logn_error').show();
                 return false;
             }
-        }
-        else {
-            $('#error_msg').html("Invalid username or password");
-            $('#logn_error').show();
-            return false;
         }
     });
     
@@ -112,5 +128,16 @@ function staffValidation() {
     }
     else {
         return true;
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+function ireportValidation() {
+    var username = $('#username').val().toLowerCase().replace("@ivc.edu", "").replace("@saddleback.edu", "");
+    if (ireportDBgetUserAccess(username) !== null) {
+        return true;
+    }
+    else {
+        return false;
     }
 }
