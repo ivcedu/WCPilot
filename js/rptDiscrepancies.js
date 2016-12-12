@@ -153,7 +153,25 @@ $(document).ready(function() {
             }
         }
         
-        getDiscrepanciesList(search_option, start_date, end_date)
+        getDiscrepanciesList(search_option, start_date, end_date);
+        return false;
+    });
+    
+    // excel button click //////////////////////////////////////////////////////
+    $('#btn_excel').click(function() {
+        var search_option = $("input[name=rdo_option]:checked").val();
+        var start_date = $('#start_date').val();
+        var end_date = $('#end_date').val();
+        
+        if (search_option === "Date_Range") {
+            if (start_date === "" || end_date === "") {
+                swal("Error", "Please select Start Date and End Date", "error");
+                return false;
+            }
+        }
+        
+        var url_html = "SearchOption=" + search_option + "&StartDate=" + start_date + "&EndDate=" + end_date;
+        location.href = "php/csv_saveDiscrepanciesList.php?" + url_html;
         return false;
     });
     
