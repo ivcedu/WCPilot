@@ -178,7 +178,7 @@ function valifiedStudentExistance() {
     
     if (student_id === null) {
         var stu_id = sessionStorage.getItem('ss_wcpilot_loginID');
-        var stu_name = sessionStorage.getItem('ss_wcpilot_loginName');
+        var stu_name = textReplaceApostrophe(sessionStorage.getItem('ss_wcpilot_loginName'));
         student_id = db_insertStudentInfo(stu_id, stu_name, stu_email);
     }
 }
@@ -204,7 +204,7 @@ function addWSample() {
     var db_end = $.formatDateTime('yy-mm-dd hh:ii:ss', dt_end);
     
     var inst_id = sessionStorage.getItem('ss_wcpilot_InstID');
-    var title = sessionStorage.getItem('ss_wcpilot_InstTitle');
+    var title = textReplaceApostrophe(sessionStorage.getItem('ss_wcpilot_InstTitle'));
     var sHTML = $.trim(textReplaceApostrophe($('.summernote').code()));
     
     getActiveReaderGrp();
