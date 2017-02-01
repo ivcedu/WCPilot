@@ -2,6 +2,8 @@
     require("config.php");
     
     $ReaderEmail = filter_input(INPUT_POST, 'ReaderEmail');
+    
+    $ReaderEmail = str_replace("'", "", $ReaderEmail);
 
     $query = "SELECT * FROM [IVCWCPILOT].[dbo].[Reader] WHERE ReaderEmail = '".$ReaderEmail."'";
 

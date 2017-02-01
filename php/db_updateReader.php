@@ -5,6 +5,9 @@
     $Active = filter_input(INPUT_POST, 'Active');
     $ReaderName = filter_input(INPUT_POST, 'ReaderName');
     $ReaderEmail = filter_input(INPUT_POST, 'ReaderEmail');
+    
+    $ReaderName = str_replace("'", "''", $ReaderName);
+    $ReaderEmail = str_replace("'", "", $ReaderEmail);
 
     $query = "UPDATE [IVCWCPILOT].[dbo].[Reader] "
                 ."SET Active = '".$Active."', ReaderName = '".$ReaderName."', ReaderEmail = '".$ReaderEmail."' "

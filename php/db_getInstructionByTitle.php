@@ -2,6 +2,8 @@
     require("config.php");
     
     $Title = filter_input(INPUT_POST, 'Title');
+    
+    $Title = str_replace("'", "''", $Title);
 
     $query = "SELECT Instruction FROM [IVCWCPILOT].[dbo].[Instruction] WHERE Title = '".$Title."'";
     

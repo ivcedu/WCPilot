@@ -5,6 +5,9 @@
     $ReaderName = filter_input(INPUT_POST, 'ReaderName');
     $ReaderEmail = filter_input(INPUT_POST, 'ReaderEmail');
     
+    $ReaderName = str_replace("'", "''", $ReaderName);
+    $ReaderEmail = str_replace("'", "", $ReaderEmail);
+    
     $query = "INSERT INTO [IVCWCPILOT].[dbo].[Reader] (Active, ReaderName, ReaderEmail) "
                 ."VALUES ('$Active', '$ReaderName', '$ReaderEmail')";  
     

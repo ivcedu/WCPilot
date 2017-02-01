@@ -9,6 +9,9 @@
     $Title = filter_input(INPUT_POST, 'Title');
     $Essay = filter_input(INPUT_POST, 'Essay');
     
+    $Title = str_replace("'", "''", $Title);
+    $Essay = str_replace("'", "''", $Essay);
+    
     $query = "INSERT INTO [IVCWCPILOT].[dbo].[WSample] (StudentID, DTStart, DTEnd, Duration, InstructionID, Title, Essay) "
                 ."VALUES ('$StudentID', '$DTStart', '$DTEnd', '$Duration', '$InstructionID', '$Title', '$Essay')";  
     

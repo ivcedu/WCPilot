@@ -2,6 +2,8 @@
     require("config.php");
     
     $StuEmail = filter_input(INPUT_POST, 'StuEmail');
+    
+    $StuEmail = str_replace("'", "", $StuEmail);
 
     $query = "SELECT StudentID FROM [IVCWCPILOT].[dbo].[Student] WHERE StuEmail = '" . $StuEmail . "'";
 

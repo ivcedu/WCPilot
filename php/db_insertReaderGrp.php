@@ -7,6 +7,8 @@
     $R2ID = filter_input(INPUT_POST, 'R2ID');
     $R3ID = filter_input(INPUT_POST, 'R3ID');
     
+    $GrpName = str_replace("'", "''", $GrpName);
+    
     $query = "INSERT INTO [IVCWCPILOT].[dbo].[ReaderGrp] (GrpEnable, GrpName, R1ID, R2ID, R3ID) "
                 ."VALUES ('$GrpEnable', '$GrpName', '$R1ID', '$R2ID', '$R3ID')";  
     

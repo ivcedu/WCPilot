@@ -7,6 +7,8 @@
     $R1ID = filter_input(INPUT_POST, 'R1ID');
     $R2ID = filter_input(INPUT_POST, 'R2ID');
     $R3ID = filter_input(INPUT_POST, 'R3ID');
+    
+    $GrpName = str_replace("'", "''", $GrpName);
 
     $query = "UPDATE [IVCWCPILOT].[dbo].[ReaderGrp] "
                 ."SET GrpEnable = '".$GrpEnable."', GrpName = '".$GrpName."', R1ID = '".$R1ID."', R2ID = '".$R2ID."', R3ID = '".$R3ID."' "
