@@ -134,8 +134,8 @@ $(document).ready(function() {
     
     // modal instruction save button click /////////////////////////////////////
     $('#mod_btn_inst_save').click(function() {
-        var title = $.trim(textReplaceApostrophe($('#mod_inst_title').val()));
-        var instruction = $.trim(textReplaceApostrophe($('.summernote').code()));
+        var title = $.trim($('#mod_inst_title').val());
+        var instruction = $.trim($('.summernote').code());
         
         if (title === "" || instruction === "") {
             swal({title: "Warning!", text: "Title and instruction are required", type: "warning"});

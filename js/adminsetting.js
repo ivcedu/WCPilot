@@ -156,8 +156,8 @@ $(document).ready(function() {
     
     // modal reader save button click //////////////////////////////////////////
     $('#mod_btn_admin_save').click(function() { 
-        var admin_name = $.trim(textReplaceApostrophe($('#mod_admin_mame').val()));
-        var admin_email = $.trim(textReplaceApostrophe($('#mod_admin_email').val()));
+        var admin_name = $.trim($('#mod_admin_mame').val());
+        var admin_email = $.trim($('#mod_admin_email').val());
         
         if (admin_id === "") {
             addAdminToDB(admin_name, admin_email);

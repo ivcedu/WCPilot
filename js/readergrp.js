@@ -132,7 +132,7 @@ $(document).ready(function() {
     
     // modal reader group save button click ////////////////////////////////////
     $('#mod_btn_reader_grp_save').click(function() {
-        var grp_name = $.trim(textReplaceApostrophe($('#mod_group_mame').val()));
+        var grp_name = $.trim($('#mod_group_mame').val());
         var grp_enable = $('#mod_grp_enable').is(':checked');
         var r1_id = $('#mod_body_reader_1').val();
         var r2_id = $('#mod_body_reader_2').val();

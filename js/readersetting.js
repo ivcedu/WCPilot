@@ -136,8 +136,8 @@ $(document).ready(function() {
     
     // modal reader save button click //////////////////////////////////////////
     $('#mod_btn_reader_save').click(function() {
-        var reader_name = $.trim(textReplaceApostrophe($('#mod_reader_mame').val()));
-        var reader_email = $.trim(textReplaceApostrophe($('#mod_reader_email').val()));
+        var reader_name = $.trim($('#mod_reader_mame').val());
+        var reader_email = $.trim($('#mod_reader_email').val());
         var active = $('#mod_reader_active').is(':checked');
         
         if (reader_name === "" || reader_email === "") {
