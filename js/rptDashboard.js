@@ -261,9 +261,9 @@ function setDashboardListHTML(instruction_id, instruction, total_records, instru
     html += "</div>";
     html += "</div>";
     
-    html += "<div class='row'>";
-    html += "<canvas id='flot_pie_chart_" + instruction_id + "' height='140'></canvas>";
-    html += "</div>";
+//    html += "<div class='row'>";
+//    html += "<canvas id='flot_pie_chart_" + instruction_id + "' height='140'></canvas>";
+//    html += "</div>";
     
     html += "</div>";
     html += "</div>";
