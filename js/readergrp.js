@@ -153,9 +153,7 @@ $(document).ready(function() {
             updateReaderGrpToDB(grp_name, grp_enable, r1_id, r2_id, r3_id, r1_name, r2_name, r3_name);
         }
         
-        $('#mod_reader_grp').modal('hide');
-//        setTimeout(function(){ swal({title: "Saved!", text: "Reader group has been saved", type: "success"}); }, 500);
-        
+        $('#mod_reader_grp').modal('hide');        
         return false;
     });
     
@@ -254,9 +252,9 @@ function getLoginInfo() {
     var login_name = sessionStorage.getItem('ss_wcpilot_loginName');
     $('#login_user').html(login_name);
     
-    if (login_name !== "Rich Kim" && login_name !== "Bruce Hagan") {
-        $('#btn_edit_select_grp').hide();
-    }
+//    if (login_name !== "Rich Kim" && login_name !== "Bruce Hagan") {
+//        $('#btn_edit_select_grp').hide();
+//    }
 }
 
 function resetModReaderGrpInfo() {
