@@ -160,8 +160,12 @@ $(document).ready(function() {
     // modal select group save button click ////////////////////////////////////
     $('#mod_btn_select_grp_save').click(function() {
         var reader_grp_id = $('#mod_body_select_grp').val();
+        if (reader_grp_id === "0") {
+            swal({title: "Error!", text: "Please select reader group", type: "error"});
+            return false;
+        }
+
         db_updateReaderGrpCurrentActive(reader_grp_id);
-        
         $('#mod_select_grp').modal('hide');
         setTimeout(function(){ swal({title: "Saved!", text: "Assigned new active reader group has been saved", type: "success"}); }, 500);
         
@@ -251,10 +255,6 @@ $.fn['animatePanel'] = function() {
 function getLoginInfo() {
     var login_name = sessionStorage.getItem('ss_wcpilot_loginName');
     $('#login_user').html(login_name);
-    
-//    if (login_name !== "Rich Kim" && login_name !== "Bruce Hagan") {
-//        $('#btn_edit_select_grp').hide();
-//    }
 }
 
 function resetModReaderGrpInfo() {
@@ -403,8 +403,8 @@ function getReaderGrpListAll() {
     result = db_getReaderGrpListAll();
     
     $('#mod_body_select_grp').empty();
-    var opt_html = "";
-    var cur_selected = "";
+    var opt_html = "<option value ='0'>Select...</option>";
+    var cur_selected = "0";
     for (var i = 0; i < result.length; i++) {
         opt_html += "<option value ='" + result[i]['ReaderGrpID'] + "'>" + result[i]['GrpName'] + "</option>";
         if (result[i]['Active'] === "1") {
